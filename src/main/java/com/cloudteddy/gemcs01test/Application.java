@@ -23,7 +23,7 @@ public class Application {
         ProductService productService = (ProductService) context.getBean("productService");
         CustomerService customerService = (CustomerService) context.getBean("customerService");
 
-        List<Dealer> dealers = dealerService.getAllDealer();
+        List<Dealer> dealers = dealerService.findAllDealers();
         for(Dealer dealer : dealers) {
             System.out.println(dealer);
         }

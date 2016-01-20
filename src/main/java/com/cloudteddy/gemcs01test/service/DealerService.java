@@ -11,7 +11,7 @@ public interface DealerService {
 
     void saveDealer(Dealer dealer);
 
-    List<Dealer> getAllDealer();
+    List<Dealer> findAllDealers();
 
     void DeleteDealerById(long id);
 

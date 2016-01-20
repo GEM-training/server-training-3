@@ -25,7 +25,7 @@ public class DealerServiceImpl implements DealerService {
     }
 
     @Override
-    public List<Dealer> getAllDealer() {
+    public List<Dealer> findAllDealers() {
         return dealerDao.findAllDealers();
     }
 
