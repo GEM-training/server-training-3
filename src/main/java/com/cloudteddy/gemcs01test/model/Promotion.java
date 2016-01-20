@@ -68,39 +68,4 @@ public class Promotion {
         this.detail = detail;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Promotion promotion = (Promotion) o;
-
-        if (id != promotion.id) return false;
-        if (dealerId != promotion.dealerId) return false;
-        if (startTime != null ? !startTime.equals(promotion.startTime) : promotion.startTime != null) return false;
-        if (endTime != null ? !endTime.equals(promotion.endTime) : promotion.endTime != null) return false;
-        return detail != null ? detail.equals(promotion.detail) : promotion.detail == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (int) (dealerId ^ (dealerId >>> 32));
-        result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
-        result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
-        result = 31 * result + (detail != null ? detail.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Promotion{" +
-                "id=" + id +
-                ", dealerId=" + dealerId +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", detail='" + detail + '\'' +
-                '}';
-    }
 }
