@@ -6,13 +6,17 @@ import javax.persistence.*;
  * Created by kimtung on 1/20/16.
  */
 @Entity
-@Table(name = "customer")
-public class Customer {
+@Table(name = "staff")
+public class Staff {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id", nullable = false)
+    @Column(name = "staff_id", nullable = false)
     private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "dealer_id", referencedColumnName = "dealer_id")
+    private Dealer dealer;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -20,11 +24,23 @@ public class Customer {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Column(name = "phone", nullable = false)
+    private String phone;
+
     @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "phone", nullable = false)
-    private String phone;
+    @Column(name = "active", nullable = false)
+    private int active;
+
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -34,12 +50,12 @@ public class Customer {
         this.firstName = firstName;
     }
 
-    public long getId() {
-        return id;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPhone() {
@@ -58,37 +74,23 @@ public class Customer {
         this.address = address;
     }
 
-    public String getLastName() {
-        return lastName;
+    public int getActive() {
+        return active;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Customer customer = (Customer) o;
-
-        if (id != customer.id) return false;
-        if (firstName != null ? !firstName.equals(customer.firstName) : customer.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(customer.lastName) : customer.lastName != null) return false;
-        if (address != null ? !address.equals(customer.address) : customer.address != null) return false;
-        return phone != null ? phone.equals(customer.phone) : customer.phone == null;
-
+    public void setActive(int active) {
+        this.active = active;
     }
 
     @Override
     public String toString() {
-        return "Customer{" +
+        return "Staff{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", active=" + active +
                 '}';
     }
 }

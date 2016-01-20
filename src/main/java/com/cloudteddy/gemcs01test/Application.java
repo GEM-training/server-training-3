@@ -27,16 +27,6 @@ public class Application {
         for(Dealer dealer : dealers) {
             System.out.println(dealer);
         }
-
-        List<Product> products = productService.findAllProducts();
-        for (Product product : products) {
-            System.out.println(product);
-        }
-
-        List<Customer> customers = customerService.findAllCustomers();
-        for (Customer customer : customers) {
-            System.out.println(customer);
-        }
     }
 
 }

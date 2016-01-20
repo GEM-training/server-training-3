@@ -1,39 +1,27 @@
 package com.cloudteddy.gemcs01test.model;
 
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
- * Created by kimtung on 1/18/16.
- * TODO: unresolved error: mapping failed to initialize lazy load, fetch type is now temporarily set to EAGER
+ * Created by kimtung on 1/20/16.
  */
 @Entity
-@Table(name = "dealer")
-public class Dealer {
+@Table(name = "maker")
+public class Maker {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dealer_id", nullable = false)
+    @Column(name = "maker_id", nullable = false)
     private long id;
 
-    @Column(name = "name", nullable = true)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "phone", nullable = true)
     private String phone;
 
-    @Column(name = "address", nullable = true)
+    @Column(name = "address", nullable = false)
     private String address;
-
-    @OneToMany(mappedBy = "dealer", fetch=FetchType.EAGER)
-    private Set<Inventory> inventories = new HashSet<>();
-
-    @OneToMany(mappedBy = "dealer", fetch = FetchType.EAGER)
-    private Set<Staff> staffs = new HashSet<>();
-
-    @OneToMany(mappedBy = "dealer", fetch = FetchType.EAGER)
-    private Set<Bill> bills = new HashSet<>();
 
     public long getId() {
         return id;
@@ -67,21 +55,17 @@ public class Dealer {
         this.address = address;
     }
 
-    public Set<Inventory> getInventories() {
-        return inventories;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Dealer dealer = (Dealer) o;
+        Maker maker = (Maker) o;
 
-        if (id != dealer.id) return false;
-        if (name != null ? !name.equals(dealer.name) : dealer.name != null) return false;
-        if (phone != null ? !phone.equals(dealer.phone) : dealer.phone != null) return false;
-        return address != null ? address.equals(dealer.address) : dealer.address == null;
+        if (id != maker.id) return false;
+        if (name != null ? !name.equals(maker.name) : maker.name != null) return false;
+        if (phone != null ? !phone.equals(maker.phone) : maker.phone != null) return false;
+        return address != null ? address.equals(maker.address) : maker.address == null;
 
     }
 
@@ -96,13 +80,11 @@ public class Dealer {
 
     @Override
     public String toString() {
-        return "Dealer{" +
+        return "Maker{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
-                ", inventories=" + inventories +
-                ", staffs=" + staffs +
                 '}';
     }
 }

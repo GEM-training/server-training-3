@@ -6,6 +6,7 @@ import javax.persistence.*;
  * Created by kimtung on 1/20/16.
  */
 @Entity
+@Table(name = "product")
 public class Product {
 
     @Id
@@ -55,23 +56,35 @@ public class Product {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if(this == obj) {
-            return true;
-        } else if (obj == null ) {
-            return false;
-        } else if(!(obj instanceof Product)) {
-            return false;
-        }
-        Product product = (Product) obj;
-        return this.id == product.id &&
-                this.name.equals(product.name) &&
-                this.detail.equals(product.detail) &&
-                this.type == product.type;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (id != product.id) return false;
+        if (type != product.type) return false;
+        if (name != null ? !name.equals(product.name) : product.name != null) return false;
+        return detail != null ? detail.equals(product.detail) : product.detail == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (detail != null ? detail.hashCode() : 0);
+        result = 31 * result + type;
+        return result;
     }
 
     @Override
     public String toString() {
-        return "[ id: " + this.id + ", name: " + this.name + ", detail: " + this.detail + ", type: " + this.type + " ]";
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", detail='" + detail + '\'' +
+                ", type=" + type +
+                '}';
     }
 }
