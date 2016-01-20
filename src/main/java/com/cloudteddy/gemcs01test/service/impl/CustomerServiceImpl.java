@@ -1,11 +1,8 @@
-package com.cloudteddy.springhibernate.service.impl;
+package com.cloudteddy.gemcs01test.service.impl;
 
-import com.cloudteddy.springhibernate.dao.CustomerDao;
-import com.cloudteddy.springhibernate.dao.ProductDao;
-import com.cloudteddy.springhibernate.model.Customer;
-import com.cloudteddy.springhibernate.model.Product;
-import com.cloudteddy.springhibernate.service.CustomerService;
-import com.cloudteddy.springhibernate.service.ProductService;
+import com.cloudteddy.gemcs01test.dao.CustomerDao;
+import com.cloudteddy.gemcs01test.model.Customer;
+import com.cloudteddy.gemcs01test.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

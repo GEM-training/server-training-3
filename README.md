@@ -1,3 +1,3 @@
 # CS01 - Unit Test
 
-test apllication for case study 01, GEM Training project (2016)
+Test application for case study 01, GEM Training project (2016)

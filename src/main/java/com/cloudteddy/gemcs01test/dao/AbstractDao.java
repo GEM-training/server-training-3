@@ -1,4 +1,4 @@
-package com.cloudteddy.springhibernate.dao;
+package com.cloudteddy.gemcs01test.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

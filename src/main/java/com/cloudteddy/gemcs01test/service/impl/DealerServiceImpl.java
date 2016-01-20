@@ -1,8 +1,8 @@
-package com.cloudteddy.springhibernate.service.impl;
+package com.cloudteddy.gemcs01test.service.impl;
 
-import com.cloudteddy.springhibernate.dao.DealerDao;
-import com.cloudteddy.springhibernate.model.Dealer;
-import com.cloudteddy.springhibernate.service.DealerService;
+import com.cloudteddy.gemcs01test.dao.DealerDao;
+import com.cloudteddy.gemcs01test.model.Dealer;
+import com.cloudteddy.gemcs01test.service.DealerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,13 +1,13 @@
-package com.cloudteddy.springhibernate.dao;
+package com.cloudteddy.gemcs01test.service;
 
-import com.cloudteddy.springhibernate.model.Product;
+import com.cloudteddy.gemcs01test.model.Product;
 
 import java.util.List;
 
 /**
  * Created by kimtung on 1/20/16.
  */
-public interface ProductDao {
+public interface ProductService {
 
     void saveProduct(Product product);
 
@@ -18,5 +18,4 @@ public interface ProductDao {
     void deleteProduct(long id);
 
     void updateProduct(Product product);
-
 }

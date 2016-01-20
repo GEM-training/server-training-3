@@ -1,12 +1,12 @@
-package com.cloudteddy.springhibernate;
+package com.cloudteddy.gemcs01test;
 
-import com.cloudteddy.springhibernate.configuration.AppConfigure;
-import com.cloudteddy.springhibernate.model.Customer;
-import com.cloudteddy.springhibernate.model.Dealer;
-import com.cloudteddy.springhibernate.model.Product;
-import com.cloudteddy.springhibernate.service.CustomerService;
-import com.cloudteddy.springhibernate.service.DealerService;
-import com.cloudteddy.springhibernate.service.ProductService;
+import com.cloudteddy.gemcs01test.configuration.AppConfigure;
+import com.cloudteddy.gemcs01test.model.Customer;
+import com.cloudteddy.gemcs01test.model.Dealer;
+import com.cloudteddy.gemcs01test.model.Product;
+import com.cloudteddy.gemcs01test.service.CustomerService;
+import com.cloudteddy.gemcs01test.service.DealerService;
+import com.cloudteddy.gemcs01test.service.ProductService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 

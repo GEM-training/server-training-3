@@ -1,6 +1,6 @@
-package com.cloudteddy.springhibernate.service;
+package com.cloudteddy.gemcs01test.service;
 
-import com.cloudteddy.springhibernate.model.Dealer;
+import com.cloudteddy.gemcs01test.model.Dealer;
 
 import java.util.List;
 

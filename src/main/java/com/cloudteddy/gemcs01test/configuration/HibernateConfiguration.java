@@ -1,4 +1,4 @@
-package com.cloudteddy.springhibernate.configuration;
+package com.cloudteddy.gemcs01test.configuration;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.Properties;
  */
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({"com.cloudteddy.springhibernate.configuration"})
+@ComponentScan({"com.cloudteddy.gemcs01test.configuration"})
 @PropertySource({"classpath:application.properties"})
 public class HibernateConfiguration {
 
@@ -31,7 +31,7 @@ public class HibernateConfiguration {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(new String[]{"com.cloudteddy.springhibernate.model"});
+        sessionFactory.setPackagesToScan(new String[]{"com.cloudteddy.gemcs01test.model"});
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }

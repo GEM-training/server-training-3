@@ -1,6 +1,6 @@
-package com.cloudteddy.springhibernate.dao;
+package com.cloudteddy.gemcs01test.dao;
 
-import com.cloudteddy.springhibernate.model.Dealer;
+import com.cloudteddy.gemcs01test.model.Dealer;
 
 import java.util.List;
 

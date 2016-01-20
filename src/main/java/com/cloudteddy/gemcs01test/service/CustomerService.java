@@ -1,14 +1,14 @@
-package com.cloudteddy.springhibernate.dao;
+package com.cloudteddy.gemcs01test.service;
 
-import com.cloudteddy.springhibernate.model.Customer;
-import com.cloudteddy.springhibernate.model.Dealer;
+import com.cloudteddy.gemcs01test.model.Customer;
 
 import java.util.List;
 
 /**
  * Created by kimtung on 1/20/16.
  */
-public interface CustomerDao {
+public interface CustomerService {
+
     void saveCustomer(Customer customer);
 
     List<Customer> findAllCustomers();
@@ -18,5 +18,4 @@ public interface CustomerDao {
     Customer findCustomerById(long id);
 
     void updateCustomer(Customer customer);
-
 }

@@ -1,4 +1,4 @@
-package com.cloudteddy.springhibernate.model;
+package com.cloudteddy.gemcs01test.model;
 
 import javax.persistence.*;
 

@@ -1,8 +1,8 @@
-package com.cloudteddy.springhibernate.dao.impl;
+package com.cloudteddy.gemcs01test.dao.impl;
 
-import com.cloudteddy.springhibernate.dao.AbstractDao;
-import com.cloudteddy.springhibernate.dao.ProductDao;
-import com.cloudteddy.springhibernate.model.Product;
+import com.cloudteddy.gemcs01test.dao.AbstractDao;
+import com.cloudteddy.gemcs01test.dao.ProductDao;
+import com.cloudteddy.gemcs01test.model.Product;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
