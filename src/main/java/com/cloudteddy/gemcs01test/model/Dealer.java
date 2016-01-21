@@ -42,6 +42,9 @@ public class Dealer {
     )
     private Set<Maker> makers;
 
+    @OneToMany(mappedBy = "dealer", fetch = FetchType.EAGER)
+    private Set<Promotion> promotions;
+
     public long getId() {
         return id;
     }
@@ -78,17 +81,39 @@ public class Dealer {
         return inventories;
     }
 
-    @Override
-    public String toString() {
-        return "Dealer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                ", inventories=" + inventories +
-                ", staffs=" + staffs +
-                ", bills=" + bills +
-                ", makers=" + makers +
-                '}';
+    public void setInventories(Set<Inventory> inventories) {
+        this.inventories = inventories;
+    }
+
+    public Set<Staff> getStaffs() {
+        return staffs;
+    }
+
+    public void setStaffs(Set<Staff> staffs) {
+        this.staffs = staffs;
+    }
+
+    public Set<Bill> getBills() {
+        return bills;
+    }
+
+    public void setBills(Set<Bill> bills) {
+        this.bills = bills;
+    }
+
+    public Set<Maker> getMakers() {
+        return makers;
+    }
+
+    public void setMakers(Set<Maker> makers) {
+        this.makers = makers;
+    }
+
+    public Set<Promotion> getPromotions() {
+        return promotions;
+    }
+
+    public void setPromotions(Set<Promotion> promotions) {
+        this.promotions = promotions;
     }
 }

@@ -33,13 +33,20 @@ public class Staff {
     @Column(name = "active", nullable = false)
     private int active;
 
-
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public void setDealer(Dealer dealer) {
+        this.dealer = dealer;
     }
 
     public String getFirstName() {
@@ -80,17 +87,5 @@ public class Staff {
 
     public void setActive(int active) {
         this.active = active;
-    }
-
-    @Override
-    public String toString() {
-        return "Staff{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                ", active=" + active +
-                '}';
     }
 }

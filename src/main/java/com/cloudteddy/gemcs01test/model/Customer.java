@@ -46,12 +46,12 @@ public class Customer {
         this.id = id;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getAddress() {
@@ -62,11 +62,19 @@ public class Customer {
         this.address = address;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Set<Bill> getBills() {
+        return bills;
+    }
+
+    public void setBills(Set<Bill> bills) {
+        this.bills = bills;
     }
 }

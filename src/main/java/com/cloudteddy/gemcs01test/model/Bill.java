@@ -1,6 +1,7 @@
 package com.cloudteddy.gemcs01test.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -23,7 +24,7 @@ public class Bill {
     @JoinColumn(name = "dealer_id", referencedColumnName = "dealer_id")
     private Dealer dealer;
 
-    @OneToMany(mappedBy = "bill")
+    @OneToMany(mappedBy = "id.bill", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<BillLine> billLines;
 
     public long getId() {
@@ -34,21 +35,41 @@ public class Bill {
         this.id = id;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public void setDealer(Dealer dealer) {
+        this.dealer = dealer;
+    }
+
+    public Set<BillLine> getBillLines() {
+        return billLines;
+    }
+
+    public void setBillLines(Set<BillLine> billLines) {
+        this.billLines = billLines;
+    }
+
+
     @Entity
     @Table(name = "bill_line")
+    @AssociationOverrides({
+            @AssociationOverride(name = "id.bill", joinColumns = @JoinColumn(name = "bill_id")),
+            @AssociationOverride(name = "id.product", joinColumns = @JoinColumn(name = "product_id"))
+    })
     public static class BillLine {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "bill_line_id")
-        private long id;
-
-        @ManyToOne
-        @JoinColumn(name = "bill_id", referencedColumnName = "bill_id")
-        private Bill bill;
-
-        @Column(name = "product_id")
-        private long productId;
+        @EmbeddedId
+        private Id id;
 
         @Column(name = "quantity")
         private int quantity;
@@ -56,44 +77,14 @@ public class Bill {
         @Column(name = "price")
         private double price;
 
-        public long getId() {
-            return id;
-        }
 
-        public void setId(long id) {
-            this.id = id;
-        }
+        @Embeddable
+        public static class Id implements Serializable {
+            @ManyToOne
+            private Bill bill;
 
-        public Bill getBill() {
-            return bill;
-        }
-
-        public void setBill(Bill bill) {
-            this.bill = bill;
-        }
-
-        public long getProductId() {
-            return productId;
-        }
-
-        public void setProductId(long productId) {
-            this.productId = productId;
-        }
-
-        public int getQuantity() {
-            return quantity;
-        }
-
-        public void setQuantity(int quantity) {
-            this.quantity = quantity;
-        }
-
-        public double getPrice() {
-            return price;
-        }
-
-        public void setPrice(double price) {
-            this.price = price;
+            @ManyToOne
+            private Product product;
         }
     }
 }

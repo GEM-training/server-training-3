@@ -1,6 +1,8 @@
 package com.cloudteddy.gemcs01test.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by kimtung on 1/20/16.
@@ -14,12 +16,15 @@ public class Inventory {
     @Column(name = "inventory_id", nullable = false)
     private long id;
 
+    @Column(name = "name", nullable = false)
+    private String name;
+
     @ManyToOne
     @JoinColumn(name = "dealer_id", referencedColumnName = "dealer_id")
     private Dealer dealer;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @OneToMany(mappedBy = "id.inventory", fetch = FetchType.EAGER)
+    private Set<ProductInInventory> products;
 
     public long getId() {
         return id;
@@ -37,11 +42,47 @@ public class Inventory {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Inventory{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+    public Set<ProductInInventory> getProducts() {
+        return products;
     }
+
+    public void setProducts(Set<ProductInInventory> products) {
+        this.products = products;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public void setDealer(Dealer dealer) {
+        this.dealer = dealer;
+    }
+
+    @Entity
+    @Table(name = "inventory_product")
+    @AssociationOverrides({
+            @AssociationOverride(name = "id.product", joinColumns = @JoinColumn(name = "product_id")),
+            @AssociationOverride(name = "id.inventory", joinColumns = @JoinColumn(name = "inventory_id"))
+    })
+    public static class ProductInInventory {
+
+        @EmbeddedId
+        private Id id;
+
+        @Column(name = "quantity_in_stock")
+        private int quantity;
+
+        @Column(name = "price")
+        private double price;
+
+        @Embeddable
+        public static class Id implements Serializable {
+            @ManyToOne
+            private Product product;
+
+            @ManyToOne
+            private Inventory inventory;
+        }
+    }
+
 }

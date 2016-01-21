@@ -51,6 +51,14 @@ public class Maker {
         this.phone = phone;
     }
 
+    public Set<Dealer> getDealers() {
+        return dealers;
+    }
+
+    public void setDealers(Set<Dealer> dealers) {
+        this.dealers = dealers;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -58,5 +66,4 @@ public class Maker {
     public void setAddress(String address) {
         this.address = address;
     }
-
 }

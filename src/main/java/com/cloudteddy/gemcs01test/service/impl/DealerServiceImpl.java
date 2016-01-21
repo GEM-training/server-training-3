@@ -39,8 +39,7 @@ public class DealerServiceImpl implements DealerService {
     }
 
     @Override
-    @RequestMapping("/dealer")
-    public Dealer findDealerById(@RequestParam(value = "id", defaultValue = "1") long id) {
+    public Dealer findDealerById(long id) {
         return dealerDao.findDealerById(id);
     }
 

@@ -2,6 +2,7 @@ package com.cloudteddy.gemcs01test.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by kimtung on 1/20/16.
@@ -15,8 +16,9 @@ public class Promotion {
     @Column(name = "promotion_id", nullable = false)
     private long id;
 
-    @Column(name = "dealer_id", nullable = false)
-    private long dealerId;
+    @ManyToOne
+    @JoinColumn(name = "dealer_id", referencedColumnName = "dealer_id")
+    private Dealer dealer;
 
     @Column(name = "start_time", nullable = false)
     private Date startTime;
@@ -24,9 +26,12 @@ public class Promotion {
     @Column(name = "end_time", nullable = false)
     private Date endTime;
 
-    @Column(name = "detail", nullable = true)
-    private String detail;
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "promotion_product",
+            joinColumns = {@JoinColumn(name = "promotion_id")},
+            inverseJoinColumns = {@JoinColumn(name = "product_id")}
+    )
+    private Set<Product> products;
 
     public long getId() {
         return id;
@@ -34,14 +39,6 @@ public class Promotion {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getDealerId() {
-        return dealerId;
-    }
-
-    public void setDealerId(long dealerId) {
-        this.dealerId = dealerId;
     }
 
     public Date getStartTime() {
@@ -60,12 +57,19 @@ public class Promotion {
         this.endTime = endTime;
     }
 
-    public String getDetail() {
-        return detail;
+    public Dealer getDealer() {
+        return dealer;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setDealer(Dealer dealer) {
+        this.dealer = dealer;
     }
 
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
 }
