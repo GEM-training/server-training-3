@@ -26,7 +26,7 @@ public class Dealer {
     @Column(name = "address", nullable = true)
     private String address;
 
-    @OneToMany(mappedBy = "dealer", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "dealer", fetch = FetchType.EAGER)
     private Set<Inventory> inventories = new HashSet<>();
 
     @OneToMany(mappedBy = "dealer", fetch = FetchType.EAGER)
@@ -34,6 +34,13 @@ public class Dealer {
 
     @OneToMany(mappedBy = "dealer", fetch = FetchType.EAGER)
     private Set<Bill> bills = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "maker_dealer",
+            joinColumns = {@JoinColumn(name = "dealer_id")},
+            inverseJoinColumns = {@JoinColumn(name = "maker_id")}
+    )
+    private Set<Maker> makers;
 
     public long getId() {
         return id;
@@ -72,29 +79,6 @@ public class Dealer {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Dealer dealer = (Dealer) o;
-
-        if (id != dealer.id) return false;
-        if (name != null ? !name.equals(dealer.name) : dealer.name != null) return false;
-        if (phone != null ? !phone.equals(dealer.phone) : dealer.phone != null) return false;
-        return address != null ? address.equals(dealer.address) : dealer.address == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "Dealer{" +
                 "id=" + id +
@@ -103,6 +87,8 @@ public class Dealer {
                 ", address='" + address + '\'' +
                 ", inventories=" + inventories +
                 ", staffs=" + staffs +
+                ", bills=" + bills +
+                ", makers=" + makers +
                 '}';
     }
 }

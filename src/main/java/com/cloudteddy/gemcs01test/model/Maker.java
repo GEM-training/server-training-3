@@ -1,6 +1,7 @@
 package com.cloudteddy.gemcs01test.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by kimtung on 1/20/16.
@@ -22,6 +23,9 @@ public class Maker {
 
     @Column(name = "address", nullable = false)
     private String address;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "makers")
+    private Set<Dealer> dealers;
 
     public long getId() {
         return id;
@@ -55,36 +59,4 @@ public class Maker {
         this.address = address;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Maker maker = (Maker) o;
-
-        if (id != maker.id) return false;
-        if (name != null ? !name.equals(maker.name) : maker.name != null) return false;
-        if (phone != null ? !phone.equals(maker.phone) : maker.phone != null) return false;
-        return address != null ? address.equals(maker.address) : maker.address == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Maker{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
 }

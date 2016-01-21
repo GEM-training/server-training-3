@@ -1,6 +1,7 @@
 package com.cloudteddy.gemcs01test.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by kimtung on 1/20/16.
@@ -25,6 +26,9 @@ public class Customer {
 
     @Column(name = "phone", nullable = false)
     private String phone;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    private Set<Bill> bills;
 
     public String getFirstName() {
         return firstName;

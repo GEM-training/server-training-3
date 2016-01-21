@@ -6,12 +6,16 @@ import com.cloudteddy.gemcs01test.service.DealerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 /**
  * Created by kimtung on 1/18/16.
  */
+@RestController
 @Service("dealerService")
 @Transactional
 public class DealerServiceImpl implements DealerService {
@@ -35,7 +39,8 @@ public class DealerServiceImpl implements DealerService {
     }
 
     @Override
-    public Dealer findDealerById(long id) {
+    @RequestMapping("/dealer")
+    public Dealer findDealerById(@RequestParam(value = "id", defaultValue = "1") long id) {
         return dealerDao.findDealerById(id);
     }
 

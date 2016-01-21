@@ -7,6 +7,8 @@ import com.cloudteddy.gemcs01test.model.Product;
 import com.cloudteddy.gemcs01test.service.CustomerService;
 import com.cloudteddy.gemcs01test.service.DealerService;
 import com.cloudteddy.gemcs01test.service.ProductService;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
@@ -23,10 +25,8 @@ public class Application {
         ProductService productService = (ProductService) context.getBean("productService");
         CustomerService customerService = (CustomerService) context.getBean("customerService");
 
-        List<Dealer> dealers = dealerService.findAllDealers();
-        for(Dealer dealer : dealers) {
-            System.out.println(dealer);
-        }
+        System.out.println(dealerService.findDealerById(1));
+
     }
 
 }
