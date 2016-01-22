@@ -45,6 +45,11 @@ dependencies {
 
     compile 'org.postgresql:postgresql:9.4-1206-jdbc41'
     compile 'com.h2database:h2:1.4.190'
+////    compile 'org.slf4j:slf4j-log4j12:1.7.13'
+////    compile 'org.slf4j:slf4j-api:1.7.13'
+//
+//    compile 'log4j:log4j:1.2.14'
+
 
 }
 

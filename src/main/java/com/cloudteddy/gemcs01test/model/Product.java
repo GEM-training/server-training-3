@@ -15,14 +15,14 @@ public class Product {
     @Column(name = "product_id", nullable = false, unique = true)
     private long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = true)
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "product_type", referencedColumnName = "product_type_id")
     private Type type;
 
-    @Column(name = "detail", nullable = false)
+    @Column(name = "detail", nullable = true)
     private String detail;
 
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

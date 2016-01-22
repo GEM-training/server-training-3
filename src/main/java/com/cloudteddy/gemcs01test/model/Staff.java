@@ -24,14 +24,14 @@ public class Staff {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone", nullable = true)
     private String phone;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = true)
     private String address;
 
     @Column(name = "active", nullable = false)
-    private int active;
+    private boolean active;
 
     public long getId() {
         return id;
@@ -81,11 +81,11 @@ public class Staff {
         this.address = address;
     }
 
-    public int getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(int active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 }
