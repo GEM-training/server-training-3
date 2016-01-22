@@ -12,7 +12,7 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id", nullable = false)
+    @Column(name = "customer_id", nullable = false, unique = true)
     private long id;
 
     @Column(name = "first_name", nullable = false)
@@ -76,5 +76,20 @@ public class Customer {
 
     public void setBills(Set<Bill> bills) {
         this.bills = bills;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Customer customer = (Customer) o;
+
+        if (id != customer.id) return false;
+        if (firstName != null ? !firstName.equals(customer.firstName) : customer.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(customer.lastName) : customer.lastName != null) return false;
+        if (address != null ? !address.equals(customer.address) : customer.address != null) return false;
+        return phone != null ? phone.equals(customer.phone) : customer.phone == null;
+
     }
 }

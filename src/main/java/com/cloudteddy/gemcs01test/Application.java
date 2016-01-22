@@ -25,8 +25,6 @@ public class Application {
         ProductService productService = (ProductService) context.getBean("productService");
         CustomerService customerService = (CustomerService) context.getBean("customerService");
 
-        System.out.println(productService.findProductById(1));
-
     }
 
 }

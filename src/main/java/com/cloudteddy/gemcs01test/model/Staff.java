@@ -11,7 +11,7 @@ public class Staff {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "staff_id", nullable = false)
+    @Column(name = "staff_id", nullable = false, unique = true)
     private long id;
 
     @ManyToOne

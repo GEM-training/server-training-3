@@ -12,7 +12,7 @@ public class Maker {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "maker_id", nullable = false)
+    @Column(name = "maker_id", nullable = false, unique = true)
     private long id;
 
     @Column(name = "name", nullable = false)

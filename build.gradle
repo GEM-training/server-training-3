@@ -44,6 +44,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
 
     compile 'org.postgresql:postgresql:9.4-1206-jdbc41'
+    compile 'com.h2database:h2:1.4.190'
+
 }
 
 sourceCompatibility = 1.8

@@ -14,7 +14,7 @@ import java.util.Set;
 public class Dealer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dealer_id", nullable = false)
+    @Column(name = "dealer_id", nullable = false, unique = true)
     private long id;
 
     @Column(name = "name", nullable = true)
@@ -115,5 +115,19 @@ public class Dealer {
 
     public void setPromotions(Set<Promotion> promotions) {
         this.promotions = promotions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Dealer dealer = (Dealer) o;
+
+        if (id != dealer.id) return false;
+        if (name != null ? !name.equals(dealer.name) : dealer.name != null) return false;
+        if (phone != null ? !phone.equals(dealer.phone) : dealer.phone != null) return false;
+        return address != null ? address.equals(dealer.address) : dealer.address == null;
+
     }
 }

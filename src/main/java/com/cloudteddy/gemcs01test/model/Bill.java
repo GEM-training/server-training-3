@@ -13,7 +13,7 @@ public class Bill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "bill_id", nullable = false)
+    @Column(name = "bill_id", nullable = false, unique = true)
     private long id;
 
     @ManyToOne
@@ -76,7 +76,6 @@ public class Bill {
 
         @Column(name = "price")
         private double price;
-
 
         @Embeddable
         public static class Id implements Serializable {

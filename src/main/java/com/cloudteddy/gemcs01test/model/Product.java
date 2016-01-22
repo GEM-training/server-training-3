@@ -12,7 +12,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
+    @Column(name = "product_id", nullable = false, unique = true)
     private long id;
 
     @Column(name = "name", nullable = false)
@@ -90,6 +90,30 @@ public class Product {
         this.promotions = promotions;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (id != product.id) return false;
+        if (name != null ? !name.equals(product.name) : product.name != null) return false;
+        if (type != null ? !type.equals(product.type) : product.type != null) return false;
+        return detail != null ? detail.equals(product.detail) : product.detail == null;
+
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", detail='" + detail + '\'' +
+                '}';
+    }
+
     @Entity
     @Table(name = "product_type")
     public static class Type {
@@ -104,5 +128,41 @@ public class Product {
 
         @OneToMany(mappedBy = "type", fetch = FetchType.EAGER)
         private Set<Product> products;
+
+        public long getId() {
+            return id;
+        }
+
+        public void setId(long id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Set<Product> getProducts() {
+            return products;
+        }
+
+        public void setProducts(Set<Product> products) {
+            this.products = products;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Type type = (Type) o;
+
+            if (id != type.id) return false;
+            return name != null ? name.equals(type.name) : type.name == null;
+
+        }
     }
 }
