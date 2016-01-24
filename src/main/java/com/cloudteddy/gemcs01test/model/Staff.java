@@ -28,7 +28,7 @@ public class Staff {
     @Column(name = "phone", nullable = true)
     private String phone;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = true)
     private String address;
 
     @Column(name = "active", nullable = false)
