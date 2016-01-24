@@ -11,8 +11,9 @@ import java.util.Set;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id", nullable = false, unique = true)
+    @SequenceGenerator(name = "customer_id_seq", sequenceName = "customer_id_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_id_seq")
+    @Column(name = "id", nullable = false, unique = true)
     private long id;
 
     @Column(name = "first_name", nullable = false)
@@ -21,10 +22,10 @@ public class Customer {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = true)
     private String address;
 
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone", nullable = true)
     private String phone;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)

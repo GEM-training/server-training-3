@@ -10,12 +10,13 @@ import javax.persistence.*;
 public class Staff {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "staff_id", nullable = false, unique = true)
+    @SequenceGenerator(name = "staff_id_seq", sequenceName = "staff_id_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "staff_id_seq")
+    @Column(name = "id", nullable = false, unique = true)
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "dealer_id", referencedColumnName = "dealer_id")
+    @JoinColumn(name = "dealer_id", referencedColumnName = "id", nullable = false)
     private Dealer dealer;
 
     @Column(name = "first_name", nullable = false)
@@ -24,14 +25,14 @@ public class Staff {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone", nullable = true)
     private String phone;
 
     @Column(name = "address", nullable = false)
     private String address;
 
     @Column(name = "active", nullable = false)
-    private int active;
+    private boolean active;
 
     public long getId() {
         return id;
@@ -81,11 +82,11 @@ public class Staff {
         this.address = address;
     }
 
-    public int getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(int active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 }

@@ -11,8 +11,9 @@ import java.util.Set;
 public class Maker {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "maker_id", nullable = false, unique = true)
+    @SequenceGenerator(name = "maker_id_seq", sequenceName = "maker_id_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "maker_id_seq")
+    @Column(name = "id", nullable = false, unique = true)
     private long id;
 
     @Column(name = "name", nullable = false)

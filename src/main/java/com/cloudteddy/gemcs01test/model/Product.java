@@ -1,5 +1,7 @@
 package com.cloudteddy.gemcs01test.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,18 +13,20 @@ import java.util.Set;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id", nullable = false, unique = true)
+    @SequenceGenerator(name = "product_id_seq", sequenceName = "product_id_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_seq")
+    @Column(name = "id", nullable = false, unique = true)
     private long id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "product_type", referencedColumnName = "product_type_id")
+    @JoinColumn(name = "product_type", referencedColumnName = "id", nullable = false)
     private Type type;
 
-    @Column(name = "detail", nullable = false)
+    @Column(name = "detail", nullable = true)
+    @org.hibernate.annotations.Type(type = "text")
     private String detail;
 
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -119,8 +123,9 @@ public class Product {
     public static class Type {
 
         @Id
-        @Column(name = "product_type_id")
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "id")
+        @SequenceGenerator(name = "product_type_id_seq", sequenceName = "product_type_id_seq", initialValue = 1, allocationSize = 1)
+        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_type_id_seq")
         private long id;
 
         @Column(name = "name")

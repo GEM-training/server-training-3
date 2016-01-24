@@ -12,12 +12,13 @@ import java.util.Set;
 public class Promotion {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "promotion_id", nullable = false, unique = true)
+    @SequenceGenerator(name = "promotion_id_seq", sequenceName = "promotion_id_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "promotion_id_seq")
+    @Column(name = "id", nullable = false, unique = true)
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "dealer_id", referencedColumnName = "dealer_id")
+    @JoinColumn(name = "dealer_id", referencedColumnName = "id", nullable = false)
     private Dealer dealer;
 
     @Column(name = "start_time", nullable = false)

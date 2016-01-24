@@ -12,16 +12,17 @@ import java.util.Set;
 public class Bill {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "bill_id", nullable = false, unique = true)
+    @SequenceGenerator(name = "bill_id_seq", sequenceName = "bill_id_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bill_id_seq")
+    @Column(name = "id", nullable = false, unique = true)
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "dealer_id", referencedColumnName = "dealer_id")
+    @JoinColumn(name = "dealer_id", referencedColumnName = "id")
     private Dealer dealer;
 
     @OneToMany(mappedBy = "id.bill", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

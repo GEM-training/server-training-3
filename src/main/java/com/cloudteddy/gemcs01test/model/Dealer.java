@@ -13,11 +13,12 @@ import java.util.Set;
 @Table(name = "dealer")
 public class Dealer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dealer_id", nullable = false, unique = true)
+    @SequenceGenerator(name = "dealer_id_seq", sequenceName = "dealer_id_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dealer_id_seq")
+    @Column(name = "id", nullable = false, unique = true)
     private long id;
 
-    @Column(name = "name", nullable = true)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "phone", nullable = true)

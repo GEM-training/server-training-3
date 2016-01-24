@@ -12,7 +12,8 @@ import java.util.Set;
 public class Inventory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "inventory_id_seq", sequenceName = "inventory_seq_id", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inventory_id_seq")
     @Column(name = "inventory_id", nullable = false, unique = true)
     private long id;
 
@@ -20,7 +21,7 @@ public class Inventory {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "dealer_id", referencedColumnName = "dealer_id")
+    @JoinColumn(name = "dealer_id", referencedColumnName = "id")
     private Dealer dealer;
 
     @OneToMany(mappedBy = "id.inventory", fetch = FetchType.EAGER)
@@ -69,7 +70,7 @@ public class Inventory {
         @EmbeddedId
         private Id id;
 
-        @Column(name = "quantity_in_stock")
+        @Column(name = "quantity")
         private int quantity;
 
         @Column(name = "price")
