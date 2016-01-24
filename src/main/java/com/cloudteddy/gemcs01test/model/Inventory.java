@@ -24,7 +24,7 @@ public class Inventory {
     @JoinColumn(name = "dealer_id", referencedColumnName = "id")
     private Dealer dealer;
 
-    @OneToMany(mappedBy = "id.inventory", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "id.inventory", cascade = CascadeType.ALL)
     private Set<ProductInInventory> products;
 
     public long getId() {

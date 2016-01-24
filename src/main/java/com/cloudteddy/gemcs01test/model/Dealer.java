@@ -27,13 +27,13 @@ public class Dealer {
     @Column(name = "address", nullable = true)
     private String address;
 
-    @OneToMany(mappedBy = "dealer", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL)
     private Set<Inventory> inventories = new HashSet<>();
 
-    @OneToMany(mappedBy = "dealer", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL)
     private Set<Staff> staffs = new HashSet<>();
 
-    @OneToMany(mappedBy = "dealer", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL)
     private Set<Bill> bills = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -43,7 +43,7 @@ public class Dealer {
     )
     private Set<Maker> makers;
 
-    @OneToMany(mappedBy = "dealer", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "dealer")
     private Set<Promotion> promotions;
 
     public long getId() {

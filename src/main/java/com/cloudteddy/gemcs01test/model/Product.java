@@ -1,7 +1,5 @@
 package com.cloudteddy.gemcs01test.model;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -29,13 +27,13 @@ public class Product {
     @org.hibernate.annotations.Type(type = "text")
     private String detail;
 
-    @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
     private Set<Bill.BillLine> billLines;
 
-    @OneToMany(mappedBy = "id.product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
     private Set<Inventory.ProductInInventory> inventories;
 
-    @ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "products")
     private Set<Promotion> promotions;
 
     public String getName() {
@@ -128,10 +126,10 @@ public class Product {
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_type_id_seq")
         private long id;
 
-        @Column(name = "name")
-        private String name;
+        @Column(name = "name", nullable = false)
+        private String name = "default  ";
 
-        @OneToMany(mappedBy = "type", fetch = FetchType.EAGER)
+        @OneToMany(mappedBy = "type")
         private Set<Product> products;
 
         public long getId() {
@@ -168,6 +166,14 @@ public class Product {
             if (id != type.id) return false;
             return name != null ? name.equals(type.name) : type.name == null;
 
+        }
+
+        @Override
+        public String toString() {
+            return "Type{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    '}';
         }
     }
 }

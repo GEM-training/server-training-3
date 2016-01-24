@@ -28,7 +28,7 @@ public class Customer {
     @Column(name = "phone", nullable = true)
     private String phone;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Bill> bills;
 
     public String getFirstName() {
