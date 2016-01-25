@@ -40,6 +40,13 @@ public class Product {
     @OneToMany(mappedBy = "id.product")
     private Set<Price> prices;
 
+    public Product() {}
+
+    public Product(String name, Type type) {
+        this.name = name;
+        this.type = type;
+    }
+
     public String getName() {
         return name;
     }
@@ -131,9 +138,9 @@ public class Product {
         private long id;
 
         @Column(name = "name", nullable = false)
-        private String name = "default  ";
+        private String name;
 
-        @OneToMany(mappedBy = "type")
+        @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
         private Set<Product> products;
 
         public long getId() {

@@ -1,10 +1,7 @@
 import com.cloudteddy.gemcs01test.configuration.AppConfigure;
 import com.cloudteddy.gemcs01test.dao.ProductTypeDao;
 import com.cloudteddy.gemcs01test.model.Product;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
@@ -20,24 +17,14 @@ import java.util.List;
 public class ProductTypeTest {
 
     private static AbstractApplicationContext context;
-    private static SessionFactory sessionFactory;
-    private static Session session;
     private static ProductTypeDao productTypeDao;
 
     @BeforeClass
     public static void before() {
         context = new AnnotationConfigApplicationContext(AppConfigure.class);
-        sessionFactory = (SessionFactory) context.getBean("sessionFactory");
         productTypeDao = (ProductTypeDao) context.getBean("productType");
-        session = sessionFactory.openSession();
     }
 
-//    @AfterClass
-//    public static void after() {
-//        context = null;
-//        sessionFactory.close();
-//        session.close();
-//    }
 
     @Test
     public void testCreateAndRead() {
@@ -93,15 +80,13 @@ public class ProductTypeTest {
         }
     }
 
-    @Test
-    public void testBigCreate() {
-        Product.Type[] types = new Product.Type[1000];
-        for(int i = 0; i < types.length; i++) {
-            types[i] = new Product.Type();
-            types[i].setName("Type " + i);
-            session.persist(types[i]);
-        }
+    @AfterClass
+    public static void after() {
+        Session session = ((SessionFactory) context.getBean("sessionFactory")).openSession();
+        SQLQuery sqlQuery = session.createSQLQuery("DELETE FROM product_type WHERE  1=1");
+        sqlQuery.executeUpdate();
+        session.flush();
+        session.close();
     }
-
 
 }
