@@ -1,4 +1,5 @@
 import com.cloudteddy.gemcs01test.configuration.AppConfigure;
+import com.cloudteddy.gemcs01test.dao.ProductTypeDao;
 import com.cloudteddy.gemcs01test.model.Product;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -21,12 +22,14 @@ public class ProductTypeTest {
     private static AbstractApplicationContext context;
     private static SessionFactory sessionFactory;
     private static Session session;
+    private static ProductTypeDao productTypeDao;
 
     @BeforeClass
     public static void before() {
         context = new AnnotationConfigApplicationContext(AppConfigure.class);
         sessionFactory = (SessionFactory) context.getBean("sessionFactory");
-
+        productTypeDao = (ProductTypeDao) context.getBean("productType");
+        session = sessionFactory.openSession();
     }
 
 //    @AfterClass
@@ -38,68 +41,53 @@ public class ProductTypeTest {
 
     @Test
     public void testCreateAndRead() {
-        Transaction transaction = session.beginTransaction();
         Product.Type unit = new Product.Type();
-        session.persist(unit);
         unit.setName("testInsert1");
-        System.out.println(unit);
         Product.Type part = new Product.Type();
-        session.persist(part);
         part.setName("testInsert2");
-        System.out.println(part);
-        transaction.commit();
 
-        Criteria criteria = session.createCriteria(Product.Type.class);
-        criteria.addOrder(Order.asc("id"));
-        List<Product.Type> types = criteria.list();
+        productTypeDao.save(unit);
+        productTypeDao.save(part);
+
+        List<Product.Type> types = productTypeDao.findAll();
 
         Assert.assertNotNull(types);
         Assert.assertEquals(2, types.size());
 
         Assert.assertEquals(unit, types.get(0));
         Assert.assertEquals(part, types.get(1));
-
-        System.out.println(types.get(0));
-        System.out.println(types.get(1));
     }
 
     @Test
     public void testDelete() {
         Product.Type mockType = new Product.Type();
         mockType.setName("testDelete");
-        session.persist(mockType);
-        session.flush();
+        productTypeDao.save(mockType);
 
-        Object unit = session.load(Product.Type.class, mockType.getId());
-        System.out.println(mockType.getId());
-        if(unit != null) {
-            session.delete(unit);
+        Product.Type retrievedType = productTypeDao.findById(mockType.getId());
+        if(retrievedType != null) {
+            productTypeDao.delete(retrievedType.getId());
         }
-        session.flush();
 
-        Criteria criteria = session.createCriteria(Product.Type.class);
-        criteria.add(Restrictions.eq("id", mockType.getId()));
-        Product.Type retrievedUnit = (Product.Type) criteria.uniqueResult();
-        Assert.assertNull(retrievedUnit);
+        retrievedType = productTypeDao.findById(mockType.getId());
+        Assert.assertNull(retrievedType);
     }
 
     @Test
     public void testUpdate() {
         Product.Type mockType = new Product.Type();
         mockType.setName("testUpdateFailed");
-        session.persist(mockType);
-        session.flush();
+        productTypeDao.save(mockType);
 
-        Object loadedType = session.load(Product.Type.class, mockType.getId());
+        Product.Type loadedType = productTypeDao.findById(mockType.getId());
         if(loadedType != null) {
             Assert.assertEquals(loadedType, mockType);
-            ((Product.Type) loadedType).setName("testUpdateSucceeded");
+            loadedType.setName("testUpdateSucceeded");
             mockType.setName("testUpdateSucceeded");
-            session.update(loadedType);
+            productTypeDao.update(loadedType);
         }
-        session.flush();
 
-        loadedType = session.load(Product.Type.class, mockType.getId());
+        loadedType = productTypeDao.findById(mockType.getId());
         if(loadedType != null) {
             Assert.assertEquals(loadedType, mockType);
         }
@@ -113,7 +101,6 @@ public class ProductTypeTest {
             types[i].setName("Type " + i);
             session.persist(types[i]);
         }
-        session.flush();
     }
 
 

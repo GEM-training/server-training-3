@@ -20,31 +20,31 @@ import java.util.List;
 public class ProductDaoImpl extends AbstractDao implements ProductDao {
 
     @Override
-    public void saveProduct(Product product) {
+    public void save(Product product) {
         persist(product);
     }
 
     @Override
-    public List<Product> findAllProducts() {
+    public List<Product> findAll() {
         Criteria criteria = getSession().createCriteria(Product.class);
         return criteria.list();
     }
 
     @Override
-    public Product findProductById(long id) {
+    public Product findById(long id) {
         Criteria criteria = getSession().createCriteria(Product.class);
         criteria.add(Restrictions.eq("id", id));
         return (Product) criteria.uniqueResult();
     }
 
     @Override
-    public void deleteProduct(long id) {
+    public void delete(long id) {
         Object persistentObject = getSession().load(Bill.class, id);
         getSession().delete(persistentObject);
     }
 
     @Override
-    public void updateProduct(Product product) {
+    public void update(Product product) {
         getSession().update(product);
     }
 }

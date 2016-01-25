@@ -9,14 +9,14 @@ import java.util.List;
  */
 public interface ProductDao {
 
-    void saveProduct(Product product);
+    void save(Product product);
 
-    List<Product> findAllProducts();
+    List<Product> findAll();
 
-    Product findProductById(long id);
+    Product findById(long id);
 
-    void deleteProduct(long id);
+    void delete(long id);
 
-    void updateProduct(Product product);
+    void update(Product product);
 
 }

@@ -10,14 +10,14 @@ import java.util.List;
  */
 public interface BillDao {
 
-    void saveBill(Bill bill);
+    void save(Bill bill);
 
-    List<Bill> findAllBills();
+    List<Bill> findAll();
 
-    Bill findBillById(long id);
+    Bill findById(long id);
 
-    void deleteBill(long id);
+    void delete(long id);
 
-    void updateBill(Product product);
+    void update(Product product);
 
 }

@@ -1,5 +1,6 @@
 package com.cloudteddy.gemcs01test.dao;
 
+import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,9 @@ public abstract class AbstractDao {
     private SessionFactory sessionFactory;
 
     protected Session getSession() {
-        return sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
+        session.setFlushMode(FlushMode.ALWAYS);
+        return session;
     }
 
     public void persist(Object entity) {

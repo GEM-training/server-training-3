@@ -19,31 +19,31 @@ import java.util.List;
 @Transactional
 public class BillDaoImpl extends AbstractDao implements BillDao {
     @Override
-    public void saveBill(Bill bill) {
+    public void save(Bill bill) {
         persist(bill);
     }
 
     @Override
-    public List<Bill> findAllBills() {
+    public List<Bill> findAll() {
         Criteria criteria = getSession().createCriteria(Bill.class);
         return criteria.list();
     }
 
     @Override
-    public Bill findBillById(long id) {
+    public Bill findById(long id) {
         Criteria criteria = getSession().createCriteria(Bill.class);
         criteria.add(Restrictions.eq("id", id));
         return (Bill) criteria.uniqueResult();
     }
 
     @Override
-    public void deleteBill(long id) {
+    public void delete(long id) {
         Object persistentObject = getSession().load(Bill.class, id);
         getSession().delete(persistentObject);
     }
 
     @Override
-    public void updateBill(Product product) {
+    public void update(Product product) {
         getSession().update(product);
     }
 }
