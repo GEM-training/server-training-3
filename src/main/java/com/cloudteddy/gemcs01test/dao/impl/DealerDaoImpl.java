@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * Created by kimtung on 1/18/16.
  */
 @Repository("dealer")
+@Transactional
 public class DealerDaoImpl extends AbstractDao implements DealerDao {
     @Override
     public void saveDealer(Dealer dealer) {

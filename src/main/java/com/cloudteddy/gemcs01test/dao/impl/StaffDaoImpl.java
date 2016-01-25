@@ -10,6 +10,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * Created by kimtung on 1/20/16.
  */
 @Repository("staff")
+@Transactional
 public class StaffDaoImpl extends AbstractDao implements StaffDao {
     @Override
     public void saveStaff(Staff staff) {
