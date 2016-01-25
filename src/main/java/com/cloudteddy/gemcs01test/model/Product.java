@@ -2,6 +2,7 @@ package com.cloudteddy.gemcs01test.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -29,16 +30,16 @@ public class Product {
     private String detail;
 
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
-    private Set<Bill.BillLine> billLines;
+    private Set<Bill.BillLine> billLines = new HashSet<>(0);
 
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
-    private Set<Inventory.ProductInInventory> inventories;
+    private Set<Inventory.ProductInInventory> inventories = new HashSet<>(0);
 
     @ManyToMany(mappedBy = "products")
-    private Set<Promotion> promotions;
+    private Set<Promotion> promotions = new HashSet<>(0);
 
     @OneToMany(mappedBy = "id.product")
-    private Set<Price> prices;
+    private Set<Price> prices = new HashSet<>(0);
 
     public Product() {}
 
@@ -142,6 +143,12 @@ public class Product {
 
         @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
         private Set<Product> products;
+
+        public Type(String name) {
+            this.name = name;
+        }
+
+        public Type() {}
 
         public long getId() {
             return id;

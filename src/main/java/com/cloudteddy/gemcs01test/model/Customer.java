@@ -1,6 +1,7 @@
 package com.cloudteddy.gemcs01test.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -29,7 +30,7 @@ public class Customer {
     private String phone;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private Set<Bill> bills;
+    private Set<Bill> bills =  new HashSet<>(0);
 
     public String getFirstName() {
         return firstName;

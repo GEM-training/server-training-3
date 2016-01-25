@@ -2,6 +2,7 @@ package com.cloudteddy.gemcs01test.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -26,7 +27,7 @@ public class Bill {
     private Dealer dealer;
 
     @OneToMany(mappedBy = "id.bill", cascade = CascadeType.ALL)
-    private Set<BillLine> billLines;
+    private Set<BillLine> billLines = new HashSet<>(0);
 
     public long getId() {
         return id;

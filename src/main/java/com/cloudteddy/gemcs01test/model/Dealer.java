@@ -27,26 +27,26 @@ public class Dealer {
     private String address;
 
     @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL)
-    private Set<Inventory> inventories = new HashSet<>();
+    private Set<Inventory> inventories = new HashSet<>(0);
 
     @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL)
-    private Set<Staff> staffs = new HashSet<>();
+    private Set<Staff> staffs = new HashSet<>(0);
 
     @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL)
-    private Set<Bill> bills = new HashSet<>();
+    private Set<Bill> bills = new HashSet<>(0);
 
     @ManyToMany()
     @JoinTable(name = "maker_dealer",
             joinColumns = {@JoinColumn(name = "dealer_id")},
             inverseJoinColumns = {@JoinColumn(name = "maker_id")}
     )
-    private Set<Maker> makers;
+    private Set<Maker> makers = new HashSet<>(0);
 
     @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL)
-    private Set<Promotion> promotions;
+    private Set<Promotion> promotions = new HashSet<>(0);
 
     @OneToMany(mappedBy = "id.dealer", cascade = CascadeType.ALL)
-    private Set<Product.Price> prices;
+    private Set<Product.Price> prices = new HashSet<>(0);
 
 
     public long getId() {
