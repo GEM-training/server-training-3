@@ -73,9 +73,6 @@ public class Inventory {
         @Column(name = "quantity")
         private int quantity;
 
-        @Column(name = "price")
-        private double price;
-
         @Embeddable
         public static class Id implements Serializable {
             @ManyToOne

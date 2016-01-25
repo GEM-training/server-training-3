@@ -27,7 +27,7 @@ public class Promotion {
     @Column(name = "end_time", nullable = false)
     private Date endTime;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany()
     @JoinTable(name = "promotion_product",
             joinColumns = {@JoinColumn(name = "promotion_id")},
             inverseJoinColumns = {@JoinColumn(name = "product_id")}

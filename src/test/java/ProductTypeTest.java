@@ -115,4 +115,6 @@ public class ProductTypeTest {
         }
         session.flush();
     }
+
+
 }

@@ -1,6 +1,9 @@
 package com.cloudteddy.gemcs01test.service;
 
 import com.cloudteddy.gemcs01test.model.Product;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 

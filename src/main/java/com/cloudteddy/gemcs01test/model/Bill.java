@@ -25,7 +25,7 @@ public class Bill {
     @JoinColumn(name = "dealer_id", referencedColumnName = "id")
     private Dealer dealer;
 
-    @OneToMany(mappedBy = "id.bill", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "id.bill", cascade = CascadeType.ALL)
     private Set<BillLine> billLines;
 
     public long getId() {

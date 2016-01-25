@@ -6,8 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by kimtung on 1/18/16.
- * TODO: unresolved error: mapping failed to initialize lazy load, fetch type is now temporarily set to EAGER
+ * Created by kimtung on 1/18/16
  */
 @Entity
 @Table(name = "dealer")
@@ -36,15 +35,19 @@ public class Dealer {
     @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL)
     private Set<Bill> bills = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany()
     @JoinTable(name = "maker_dealer",
             joinColumns = {@JoinColumn(name = "dealer_id")},
             inverseJoinColumns = {@JoinColumn(name = "maker_id")}
     )
     private Set<Maker> makers;
 
-    @OneToMany(mappedBy = "dealer")
+    @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL)
     private Set<Promotion> promotions;
+
+    @OneToMany(mappedBy = "id.dealer", cascade = CascadeType.ALL)
+    private Set<Product.Price> prices;
+
 
     public long getId() {
         return id;
@@ -116,6 +119,14 @@ public class Dealer {
 
     public void setPromotions(Set<Promotion> promotions) {
         this.promotions = promotions;
+    }
+
+    public Set<Product.Price> getPrices() {
+        return prices;
+    }
+
+    public void setPrices(Set<Product.Price> prices) {
+        this.prices = prices;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.cloudteddy.gemcs01test.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -35,6 +36,9 @@ public class Product {
 
     @ManyToMany(mappedBy = "products")
     private Set<Promotion> promotions;
+
+    @OneToMany(mappedBy = "id.product")
+    private Set<Price> prices;
 
     public String getName() {
         return name;
@@ -175,5 +179,31 @@ public class Product {
                     ", name='" + name + '\'' +
                     '}';
         }
+    }
+
+    @Entity
+    @Table(name = "product_price")
+    @AssociationOverrides({
+            @AssociationOverride(name = "id.product", joinColumns = @JoinColumn(name = "product_id")),
+            @AssociationOverride(name = "id.dealer", joinColumns = @JoinColumn(name = "dealer_id"))
+    })
+    public static class Price {
+
+        @EmbeddedId
+        private Id id;
+
+        @Column(name = "price", nullable = true)
+        private double price;
+
+        @Embeddable
+        public static class Id implements Serializable{
+
+            @ManyToOne
+            private Product product;
+
+            @ManyToOne
+            private Dealer dealer;
+        }
+
     }
 }
