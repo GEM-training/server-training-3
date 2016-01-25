@@ -10,7 +10,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by kimtung on 1/20/16.
@@ -22,6 +24,14 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
     @Override
     public void save(Product product) {
         persist(product);
+    }
+
+    @Override
+    public List<Product> findByType(Product.Type type) {
+        Product.Type persitentType = (Product.Type) getSession().load(Product.Type.class, type.getId());
+        List<Product> products = new ArrayList<>(0);
+        products.addAll(persitentType.getProducts().stream().collect(Collectors.toList()));
+        return products;
     }
 
     @Override
@@ -39,7 +49,7 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
 
     @Override
     public void delete(long id) {
-        Object persistentObject = getSession().load(Bill.class, id);
+        Object persistentObject = getSession().load(Product.class, id);
         getSession().delete(persistentObject);
     }
 
