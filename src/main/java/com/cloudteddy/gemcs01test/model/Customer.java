@@ -1,5 +1,7 @@
 package com.cloudteddy.gemcs01test.model;
 
+import org.hibernate.annotations.GeneratorType;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -92,5 +94,24 @@ public class Customer {
         if (address != null ? !address.equals(customer.address) : customer.address != null) return false;
         return phone != null ? phone.equals(customer.phone) : customer.phone == null;
 
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", bills=" + bills +
+                '}';
+    }
+
+    public Customer(String firstName, String lastName, String address, String phone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phone = phone;
     }
 }

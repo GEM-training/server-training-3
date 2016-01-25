@@ -42,4 +42,6 @@ public class ProductServiceImpl implements ProductService {
     public void updateProduct(Product product) {
         productDao.update(product);
     }
+
+    public List<Product> findProductByInventoryId(long INVENTORY_ID) { return productDao.findProductByInventoryId(INVENTORY_ID);}
 }

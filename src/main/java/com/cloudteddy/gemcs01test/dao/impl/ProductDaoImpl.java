@@ -47,4 +47,9 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
     public void update(Product product) {
         getSession().update(product);
     }
+
+    @Override
+    public List<Product> findProductByInventoryId(long INVENTORY_ID) {
+        return null;
+    }
 }

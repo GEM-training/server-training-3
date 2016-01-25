@@ -25,6 +25,12 @@ public class Application {
         ProductService productService = (ProductService) context.getBean("productService");
         CustomerService customerService = (CustomerService) context.getBean("customerService");
 
+//        for (int i = 0; i < 1000; i++) {
+//            System.out.print(customerService.findCustomerById(1).toString());
+//        }
+
+        customerService.saveCustomer(new Customer("Khac Hoang 6", "Ngo", "123", "321"));
+
     }
 
 }

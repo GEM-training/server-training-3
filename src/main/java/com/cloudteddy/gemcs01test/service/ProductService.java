@@ -21,4 +21,5 @@ public interface ProductService {
     void deleteProduct(long id);
 
     void updateProduct(Product product);
+    public List<Product> findProductByInventoryId(long INVENTORY_ID);
 }
