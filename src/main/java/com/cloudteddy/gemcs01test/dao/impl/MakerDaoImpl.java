@@ -39,9 +39,8 @@ public class MakerDaoImpl extends AbstractDao implements MakerDao {
 
     @Override
     public void deleteMaker(long id) {
-        Query deleteQuery  = getSession().createSQLQuery("DELETE FROM maker where maker_id = :id");
-        deleteQuery.setLong("id", id);
-        deleteQuery.executeUpdate();
+        Object persistentObject = getSession().load(Bill.class, id);
+        getSession().delete(persistentObject);
     }
 
     @Override

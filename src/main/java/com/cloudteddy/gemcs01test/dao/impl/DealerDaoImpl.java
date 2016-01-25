@@ -2,6 +2,7 @@ package com.cloudteddy.gemcs01test.dao.impl;
 
 import com.cloudteddy.gemcs01test.dao.AbstractDao;
 import com.cloudteddy.gemcs01test.dao.DealerDao;
+import com.cloudteddy.gemcs01test.model.Bill;
 import com.cloudteddy.gemcs01test.model.Dealer;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -30,9 +31,8 @@ public class DealerDaoImpl extends AbstractDao implements DealerDao {
 
     @Override
     public void deleteDealerById(long id) {
-        Query query = getSession().createSQLQuery("DELETE FROM dealer where id = :id");
-        query.setLong("id", id);
-        query.executeUpdate();
+        Object persistentObject = getSession().load(Bill.class, id);
+        getSession().delete(persistentObject);
     }
 
     @Override

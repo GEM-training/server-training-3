@@ -40,9 +40,8 @@ public class PromotionDaoImpl extends AbstractDao implements PromotionDao {
 
     @Override
     public void deletePromotion(long id) {
-        Query deleteQuery  = getSession().createSQLQuery("DELETE FROM promotion where promotion_id = :id");
-        deleteQuery.setLong("id", id);
-        deleteQuery.executeUpdate();
+        Object persistentObject = getSession().load(Bill.class, id);
+        getSession().delete(persistentObject);
     }
 
     @Override

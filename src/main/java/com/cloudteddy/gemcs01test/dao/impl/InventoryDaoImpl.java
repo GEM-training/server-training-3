@@ -3,6 +3,7 @@ package com.cloudteddy.gemcs01test.dao.impl;
 import com.cloudteddy.gemcs01test.dao.AbstractDao;
 import com.cloudteddy.gemcs01test.dao.InventoryDao;
 import com.cloudteddy.gemcs01test.dao.ProductDao;
+import com.cloudteddy.gemcs01test.model.Bill;
 import com.cloudteddy.gemcs01test.model.Inventory;
 import com.cloudteddy.gemcs01test.model.Product;
 import org.hibernate.Criteria;
@@ -40,9 +41,8 @@ public class InventoryDaoImpl extends AbstractDao implements InventoryDao {
 
     @Override
     public void deleteInventory(long id) {
-        Query deleteQuery  = getSession().createSQLQuery("DELETE FROM inventory where inventory_id = :id");
-        deleteQuery.setLong("id", id);
-        deleteQuery.executeUpdate();
+        Object persistentObject = getSession().load(Bill.class, id);
+        getSession().delete(persistentObject);
     }
 
     @Override

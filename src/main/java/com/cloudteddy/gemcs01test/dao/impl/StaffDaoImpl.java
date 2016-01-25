@@ -40,9 +40,8 @@ public class StaffDaoImpl extends AbstractDao implements StaffDao {
 
     @Override
     public void deleteStaff(long id) {
-        Query deleteQuery  = getSession().createSQLQuery("DELETE FROM staff where staff_id = :id");
-        deleteQuery.setLong("id", id);
-        deleteQuery.executeUpdate();
+        Object persistentObject = getSession().load(Bill.class, id);
+        getSession().delete(persistentObject);
     }
 
     @Override

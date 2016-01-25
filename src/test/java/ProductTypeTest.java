@@ -26,7 +26,7 @@ public class ProductTypeTest {
     public static void before() {
         context = new AnnotationConfigApplicationContext(AppConfigure.class);
         sessionFactory = (SessionFactory) context.getBean("sessionFactory");
-        session = sessionFactory.openSession();
+
     }
 
 //    @AfterClass

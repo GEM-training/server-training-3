@@ -38,9 +38,8 @@ public class BillDaoImpl extends AbstractDao implements BillDao {
 
     @Override
     public void deleteBill(long id) {
-        Query deleteQuery  = getSession().createSQLQuery("DELETE FROM bill where bill_id = :id");
-        deleteQuery.setLong("id", id);
-        deleteQuery.executeUpdate();
+        Object persistentObject = getSession().load(Bill.class, id);
+        getSession().delete(persistentObject);
     }
 
     @Override
