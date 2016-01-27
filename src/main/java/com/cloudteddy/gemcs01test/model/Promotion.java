@@ -2,6 +2,7 @@ package com.cloudteddy.gemcs01test.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -32,7 +33,7 @@ public class Promotion {
             joinColumns = {@JoinColumn(name = "promotion_id")},
             inverseJoinColumns = {@JoinColumn(name = "product_id")}
     )
-    private Set<Product> products;
+    private Set<Product> products = new HashSet<>(0);
 
     public long getId() {
         return id;

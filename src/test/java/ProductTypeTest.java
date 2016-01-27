@@ -1,13 +1,15 @@
 import com.cloudteddy.gemcs01test.configuration.AppConfigure;
 import com.cloudteddy.gemcs01test.dao.ProductTypeDao;
 import com.cloudteddy.gemcs01test.model.Product;
-import org.hibernate.*;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.exception.ConstraintViolationException;
-import org.junit.*;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import java.util.List;
 

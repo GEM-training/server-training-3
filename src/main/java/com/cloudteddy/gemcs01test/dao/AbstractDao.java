@@ -26,4 +26,8 @@ public abstract class AbstractDao {
     public void delete(Object entity) {
         getSession().delete(entity);
     }
+
+    public void refresh(Object object) {
+        getSession().refresh(object);
+    }
 }

@@ -1,6 +1,7 @@
 package com.cloudteddy.gemcs01test.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -26,7 +27,7 @@ public class Maker {
     private String address;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "makers")
-    private Set<Dealer> dealers;
+    private Set<Dealer> dealers = new HashSet<>(0);
 
     public long getId() {
         return id;
