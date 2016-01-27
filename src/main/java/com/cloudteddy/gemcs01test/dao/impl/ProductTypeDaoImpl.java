@@ -20,39 +20,39 @@ import java.util.List;
 @Transactional
 public class ProductTypeDaoImpl extends AbstractDao implements ProductTypeDao {
     @Override
-    public void save(Product.Type type) {
+    public void saveType(Product.Type type) {
         persist(type);
     }
 
     @Override
-    public void save(Product.Type[] types) {
-        for(Product.Type type : types) {
-            save(type);
+    public void saveTypes(Product.Type[] types) {
+        for (Product.Type type : types) {
+            saveType(type);
         }
     }
 
     @Override
-    public List<Product.Type> findAll() {
+    public List<Product.Type> findAllTypes() {
         Criteria criteria = getSession().createCriteria(Product.Type.class);
         criteria.addOrder(Order.asc("id"));
         return criteria.list();
     }
 
     @Override
-    public Product.Type findById(long id) {
+    public Product.Type findTypeById(long id) {
         Criteria criteria = getSession().createCriteria(Product.Type.class);
         criteria.add(Restrictions.eq("id", id));
         return (Product.Type) criteria.uniqueResult();
     }
 
     @Override
-    public void delete(long id) {
+    public void deleteTypeById(long id) {
         Object persistentObject = getSession().load(Product.Type.class, id);
         getSession().delete(persistentObject);
     }
 
     @Override
-    public void update(Product.Type type) {
+    public void updateType(Product.Type type) {
         getSession().update(type);
     }
 }

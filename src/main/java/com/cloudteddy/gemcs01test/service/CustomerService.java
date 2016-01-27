@@ -12,9 +12,9 @@ public interface CustomerService {
 
     List<Customer> findAllCustomers();
 
-    void deleteCustomerById(long id);
-
     Customer findCustomerById(long id);
+
+    void deleteCustomerById(long id);
 
     void updateCustomer(Customer customer);
 }

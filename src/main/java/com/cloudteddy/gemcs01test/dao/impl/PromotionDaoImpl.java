@@ -39,7 +39,7 @@ public class PromotionDaoImpl extends AbstractDao implements PromotionDao {
     }
 
     @Override
-    public void deletePromotion(long id) {
+    public void deletePromotionById(long id) {
         Object persistentObject = getSession().load(Bill.class, id);
         getSession().delete(persistentObject);
     }

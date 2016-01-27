@@ -1,21 +1,20 @@
-package com.cloudteddy.gemcs01test.dao;
+package com.cloudteddy.gemcs01test.service;
 
 import com.cloudteddy.gemcs01test.model.Promotion;
 
 import java.util.List;
 
 /**
- * Created by kimtung on 1/20/16.
+ * Created by quanda on 27/01/2016.
  */
-public interface PromotionDao {
-
+public interface PromotionService {
     void savePromotion(Promotion promotion);
 
     List<Promotion> findAllPromotions();
 
     Promotion findPromotionById(long id);
 
-    void deletePromotionById(long id);
+    void deletePromotion(long id);
 
     void updatePromotion(Promotion promotion);
 

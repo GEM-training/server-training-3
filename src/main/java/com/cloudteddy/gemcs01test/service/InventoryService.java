@@ -1,14 +1,13 @@
-package com.cloudteddy.gemcs01test.dao;
+package com.cloudteddy.gemcs01test.service;
 
 import com.cloudteddy.gemcs01test.model.Inventory;
-import com.cloudteddy.gemcs01test.model.Product;
 
 import java.util.List;
 
 /**
- * Created by kimtung on 1/20/16.
+ * Created by quanda on 27/01/2016.
  */
-public interface InventoryDao {
+public interface InventoryService {
 
     void saveInventory(Inventory inventory);
 
@@ -19,5 +18,4 @@ public interface InventoryDao {
     void deleteInventoryById(long id);
 
     void updateInventory(Inventory inventory);
-
 }

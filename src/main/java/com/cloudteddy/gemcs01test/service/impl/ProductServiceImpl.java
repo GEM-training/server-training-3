@@ -20,28 +20,38 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void saveProduct(Product product) {
-        productDao.save(product);
+        productDao.saveProduct(product);
     }
 
     @Override
     public List<Product> findAllProducts() {
-        return productDao.findAll();
+        return productDao.findAllProducts();
+    }
+
+    @Override
+    public List<Product> findProductByType(Product.Type type) {
+        return productDao.findProductByType(type);
+    }
+
+    @Override
+    public List<Product> findProductByInventoryId(long id) {
+        return productDao.findProductByInventoryId(id);
     }
 
     @Override
     public Product findProductById(long id) {
-        return productDao.findById(id);
+        return productDao.findProductById(id);
     }
 
     @Override
     public void deleteProduct(long id) {
-        productDao.delete(id);
+        productDao.deleteProductById(id);
     }
 
     @Override
     public void updateProduct(Product product) {
-        productDao.update(product);
+        productDao.updateProduct(product);
     }
 
-    public List<Product> findProductByInventoryId(long INVENTORY_ID) { return productDao.findProductByInventoryId(INVENTORY_ID);}
+
 }

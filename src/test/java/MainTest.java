@@ -12,16 +12,14 @@ public class MainTest {
     AbstractApplicationContext context;
     ProductService productService;
 
-    public void init(){
-        context= new AnnotationConfigApplicationContext(AppConfigure.class);
+    public void init() {
+        context = new AnnotationConfigApplicationContext(AppConfigure.class);
         productService = (ProductService) context.getBean("productService");
     }
 
     @Test
-    public void test1(){
+    public void test1() {
         init();
-        long[] expect = {7,8,9};
-
-
+        long[] expect = {7, 8, 9};
     }
 }

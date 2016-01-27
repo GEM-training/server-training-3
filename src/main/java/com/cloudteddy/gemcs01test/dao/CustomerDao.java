@@ -12,11 +12,10 @@ public interface CustomerDao {
 
     List<Customer> findAllCustomers();
 
-    void deleteCustomerById(long id);
-
     Customer findCustomerById(long id);
 
-    void updateCustomer(Customer customer);
+    void deleteCustomerById(long id);
 
+    void updateCustomer(Customer customer);
 
 }

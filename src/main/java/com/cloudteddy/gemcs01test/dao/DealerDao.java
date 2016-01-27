@@ -13,9 +13,9 @@ public interface DealerDao {
 
     List<Dealer> findAllDealers();
 
-    void deleteDealerById(long id);
-
     Dealer findDealerById(long id);
+
+    void deleteDealerById(long id);
 
     void updateDealer(Dealer dealer);
 }

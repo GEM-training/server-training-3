@@ -16,7 +16,7 @@ public interface StaffDao {
 
     Staff findStaffById(long id);
 
-    void deleteStaff(long id);
+    void deleteStaffById(long id);
 
     void updateStaff(Staff staff);
 

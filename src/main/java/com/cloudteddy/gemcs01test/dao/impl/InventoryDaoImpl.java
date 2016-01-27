@@ -40,7 +40,7 @@ public class InventoryDaoImpl extends AbstractDao implements InventoryDao {
     }
 
     @Override
-    public void deleteInventory(long id) {
+    public void deleteInventoryById(long id) {
         Object persistentObject = getSession().load(Bill.class, id);
         getSession().delete(persistentObject);
     }

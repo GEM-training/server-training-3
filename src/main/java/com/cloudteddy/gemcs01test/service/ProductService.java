@@ -16,10 +16,15 @@ public interface ProductService {
 
     List<Product> findAllProducts();
 
+    List<Product> findProductByType(Product.Type type);
+
+    List<Product> findProductByInventoryId(long id);
+
     Product findProductById(long id);
 
     void deleteProduct(long id);
 
     void updateProduct(Product product);
-    public List<Product> findProductByInventoryId(long INVENTORY_ID);
+
+
 }

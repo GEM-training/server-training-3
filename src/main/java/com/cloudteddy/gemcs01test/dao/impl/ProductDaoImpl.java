@@ -23,47 +23,50 @@ import java.util.stream.Collectors;
 public class ProductDaoImpl extends AbstractDao implements ProductDao {
 
     @Override
-    public void save(Product product) {
+    public void saveProduct(Product product) {
         persist(product);
     }
 
     @Override
-    public List<Product> findByType(Product.Type type) {
+    public List<Product> findProductByType(Product.Type type) {
         Product.Type persitentType = (Product.Type) getSession().load(Product.Type.class, type.getId());
         List<Product> products = new ArrayList<>(0);
-        if(persitentType != null) {
+        if (persitentType != null) {
             products.addAll(persitentType.getProducts().stream().collect(Collectors.toList()));
         }
         return products;
     }
 
     @Override
-    public List<Product> findAll() {
+    public List<Product> findProductByInventoryId(long id) {
+        /**
+         * Implement
+         */
+        return null;
+    }
+
+    @Override
+    public List<Product> findAllProducts() {
         Criteria criteria = getSession().createCriteria(Product.class);
         criteria.addOrder(Order.asc("id"));
         return criteria.list();
     }
 
     @Override
-    public Product findById(long id) {
+    public Product findProductById(long id) {
         Criteria criteria = getSession().createCriteria(Product.class);
         criteria.add(Restrictions.eq("id", id));
         return (Product) criteria.uniqueResult();
     }
 
     @Override
-    public void delete(long id) {
+    public void deleteProductById(long id) {
         Object persistentObject = getSession().load(Product.class, id);
         getSession().delete(persistentObject);
     }
 
     @Override
-    public void update(Product product) {
+    public void updateProduct(Product product) {
         getSession().update(product);
-    }
-
-    @Override
-    public List<Product> findProductByInventoryId(long INVENTORY_ID) {
-        return null;
     }
 }

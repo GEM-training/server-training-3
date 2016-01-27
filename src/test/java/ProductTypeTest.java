@@ -27,7 +27,6 @@ public class ProductTypeTest {
         productTypeDao = (ProductTypeDao) context.getBean("productType");
     }
 
-
     @Test
     public void testCreateAndRead() {
         Product.Type unit = new Product.Type();
@@ -54,7 +53,7 @@ public class ProductTypeTest {
         productTypeDao.save(mockType);
 
         Product.Type retrievedType = productTypeDao.findById(mockType.getId());
-        if(retrievedType != null) {
+        if (retrievedType != null) {
             productTypeDao.delete(retrievedType.getId());
         }
 
@@ -69,7 +68,7 @@ public class ProductTypeTest {
         productTypeDao.save(mockType);
 
         Product.Type loadedType = productTypeDao.findById(mockType.getId());
-        if(loadedType != null) {
+        if (loadedType != null) {
             Assert.assertEquals(loadedType, mockType);
             loadedType.setName("testUpdateSucceeded");
             mockType.setName("testUpdateSucceeded");
@@ -77,7 +76,7 @@ public class ProductTypeTest {
         }
 
         loadedType = productTypeDao.findById(mockType.getId());
-        if(loadedType != null) {
+        if (loadedType != null) {
             Assert.assertEquals(loadedType, mockType);
         }
     }
