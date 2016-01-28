@@ -29,7 +29,7 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
     public List<Product> list(int pageNum, int pageSize) {
         Criteria criteria = getSession().createCriteria(Product.class);
         criteria.addOrder(Order.asc("name"))
-                .setFirstResult(pageSize*pageNum)
+                .setFirstResult(pageSize * pageNum)
                 .setMaxResults(pageSize)
                 .setCacheable(true);
         return criteria.list();
@@ -45,13 +45,12 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
     @Override
     public Product getById(long id) {
         Criteria criteria = getSession().createCriteria(Product.class);
-        criteria.add(Restrictions.eq("id",id));
-        return (Product)criteria.uniqueResult();
+        criteria.add(Restrictions.eq("id", id));
+        return (Product) criteria.uniqueResult();
     }
 
     @Override
     public void update(Product product) {
-
     }
 
     @Override

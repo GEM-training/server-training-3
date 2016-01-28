@@ -58,11 +58,18 @@ public class Product {
         this.type = type;
     }
 
+    public Product(String name, String detail, Type type) {
+        this.name = name;
+        this.detail = detail;
+        this.type = type;
+    }
+
     public Product(Product product) {
         this.name = product.getName();
         this.detail = product.getDetail();
         this.type = product.getType();
     }
+
 
     public String getName() {
         return name;

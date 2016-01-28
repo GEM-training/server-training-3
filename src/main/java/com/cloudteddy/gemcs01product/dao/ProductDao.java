@@ -9,10 +9,9 @@ import java.util.List;
  */
 public interface ProductDao {
 
-
     List<Product> list();
 
-    public List<Product> list(int pageNum, int pageSize);
+    List<Product> list(int pageNum, int pageSize);
 
     Long count();
 

@@ -1,13 +1,12 @@
 package com.cloudteddy.gemcs01product.rest.controller;
 
 import com.cloudteddy.gemcs01product.dao.ProductDao;
+import com.cloudteddy.gemcs01product.dao.ProductTypeDao;
 import com.cloudteddy.gemcs01product.dao.model.Product;
 import com.cloudteddy.gemcs01product.rest.message.AllProductResponse;
 import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,10 +20,13 @@ public class ProductController {
     @Autowired
     private ProductDao productDao;
 
+    @Autowired
+    private ProductTypeDao productTypeDao;
+
     @RequestMapping()
     public AllProductResponse list(
             @RequestParam(name = "pageSize", defaultValue = "25") int pageSize,
-            @RequestParam(name = "pageNum", defaultValue = "1") int pageNum ){
+            @RequestParam(name = "pageNum", defaultValue = "1") int pageNum) {
 
         List<Product> products = productDao.list(pageNum, pageSize);
         AllProductResponse response = new AllProductResponse();
@@ -55,13 +57,26 @@ public class ProductController {
         return "Bug again? wtf!!!";
     }
 
-    @RequestMapping("/insert")
-    public String insert(@RequestParam(name = "product") Product product) {
+    @RequestMapping(value = "/insert", method = RequestMethod.POST, consumes = "application/json")
+    public String insert(@RequestBody AllProductResponse.ProductItem product) {
         try {
-            productDao.insert(product);
+            if (product.getName() == null) {
+                return "Name is empty";
+            } else if (product.getType() == null) {
+                return "Type is empty";
+            } else {
+                productDao.insert(new Product(product.getName(), product.getDetail(), productTypeDao.getByName(product.getType())));
+            }
         } catch (Exception e) {
+            /**
+             * handle insert error
+             */
             e.printStackTrace();
+            return "Error";
         }
+        /**
+         * Handle inserted
+         */
         return "Insert " + product.toString();
     }
 
@@ -83,13 +98,12 @@ public class ProductController {
          */
         return "Deleted item " + id;
     }
+
     @RequestMapping("/detail")
     public AllProductResponse.ProductItem viewDetail(
-        @RequestParam(name = "id", defaultValue = "0") int id){
-
-        Product product  = productDao.getById(id);
-        return new AllProductResponse.ProductItem(product.getId(),product.getName(),product.getDetail(),product.getType().getName());
+            @RequestParam(name = "id", defaultValue = "0") int id) {
+        Product product = productDao.getById(id);
+        return new AllProductResponse.ProductItem(product.getId(), product.getName(), product.getDetail(), product.getType().getName());
     }
-
 
 }
