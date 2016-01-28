@@ -17,10 +17,9 @@ public interface ProductDao {
 
     Long count();
 
-    Product getById();
-
     void update(Product product);
 
     void delete(Product product);
 
+    public Product getById(long id);
 }

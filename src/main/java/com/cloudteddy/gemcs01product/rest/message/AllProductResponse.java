@@ -70,6 +70,16 @@ public class AllProductResponse {
             this.type = type;
             return this;
         }
+
+        public ProductItem(long id, String name, String detail, String type) {
+            this.id = id;
+            this.name = name;
+            this.detail = detail;
+            this.type = type;
+        }
+
+        public ProductItem() {
+        }
     }
 
 }

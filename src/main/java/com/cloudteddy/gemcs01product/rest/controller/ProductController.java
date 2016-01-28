@@ -23,7 +23,7 @@ public class ProductController {
     @RequestMapping()
     public AllProductResponse list(
             @RequestParam(name = "pageSize", defaultValue = "25") int pageSize,
-            @RequestParam(name = "page", defaultValue = "1") int pageNum ){
+            @RequestParam(name = "pageNum", defaultValue = "1") int pageNum ){
 
         List<Product> products = productDao.list(pageNum, pageSize);
         AllProductResponse response = new AllProductResponse();
@@ -52,6 +52,15 @@ public class ProductController {
     @RequestMapping("/error")
     public String error() {
         return "Bug again? wtf!!!";
+    }
+
+
+    @RequestMapping("/detail")
+    public AllProductResponse.ProductItem viewDetail(
+        @RequestParam(name = "id", defaultValue = "0") int id){
+
+        Product product  = productDao.getById(id);
+        return new AllProductResponse.ProductItem(product.getId(),product.getName(),product.getDetail(),product.getType().getName());
     }
 
 
