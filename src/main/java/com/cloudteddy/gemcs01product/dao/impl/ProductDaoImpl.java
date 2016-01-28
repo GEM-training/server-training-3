@@ -5,6 +5,7 @@ import com.cloudteddy.gemcs01product.dao.model.Product;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +29,7 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
     public List<Product> list(int pageNum, int pageSize) {
         Criteria criteria = getSession().createCriteria(Product.class);
         criteria.addOrder(Order.asc("name"))
-                .setFirstResult(pageSize * pageNum)
+                .setFirstResult(pageSize*pageNum)
                 .setMaxResults(pageSize)
                 .setCacheable(true);
         return criteria.list();
@@ -43,7 +44,9 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
 
     @Override
     public Product getById(long id) {
-        return null;
+        Criteria criteria = getSession().createCriteria(Product.class);
+        criteria.add(Restrictions.eq("id",id));
+        return (Product)criteria.uniqueResult();
     }
 
     @Override
