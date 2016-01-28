@@ -1,0 +1,58 @@
+package com.cloudteddy.gemcs01product.rest.controller;
+
+import com.cloudteddy.gemcs01product.dao.ProductDao;
+import com.cloudteddy.gemcs01product.dao.model.Product;
+import com.cloudteddy.gemcs01product.rest.message.AllProductResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+/**
+ * Created by kimtung on 1/27/16.
+ */
+@RestController
+@RequestMapping("/product")
+public class ProductController {
+
+    @Autowired
+    private ProductDao productDao;
+
+    @RequestMapping()
+    public AllProductResponse list(
+            @RequestParam(name = "pageSize", defaultValue = "25") int pageSize,
+            @RequestParam(name = "page", defaultValue = "1") int pageNum ){
+
+        List<Product> products = productDao.list(pageNum, pageSize);
+        AllProductResponse response = new AllProductResponse();
+        response.setPage(pageNum);
+        for (Product product : products) {
+            AllProductResponse.ProductItem item = new AllProductResponse.ProductItem();
+            item.setId(product.getId())
+                    .setName(product.getName())
+                    .setType(product.getType().getName())
+                    .setDetail(product.getDetail());
+            response.getItems().add(item);
+        }
+        return response;
+    }
+
+    @RequestMapping("/count")
+    public Long count() {
+        return productDao.count();
+    }
+
+    @RequestMapping("*")
+    public String fallback() {
+        return "I don't know what you're asking :3";
+    }
+
+    @RequestMapping("/error")
+    public String error() {
+        return "Bug again? wtf!!!";
+    }
+
+
+}
