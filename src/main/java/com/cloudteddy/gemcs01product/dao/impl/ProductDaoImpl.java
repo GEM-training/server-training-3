@@ -26,6 +26,15 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
     }
 
     @Override
+    public List<Product> getProducts(int pageNum, int pageSize) {
+        Criteria criteria = getSession().createCriteria(Product.class);
+        criteria.addOrder(Order.asc("name"));
+        criteria.setFirstResult(pageNum*pageSize);
+        criteria.setMaxResults(pageSize);
+        return criteria.list();
+    }
+
+    @Override
     public List<Product> list(int pageNum, int pageSize) {
         Criteria criteria = getSession().createCriteria(Product.class);
         criteria.addOrder(Order.asc("name"))

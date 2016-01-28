@@ -3,11 +3,18 @@ package com.cloudteddy.gemcs01product.rest.controller;
 import com.cloudteddy.gemcs01product.dao.ProductDao;
 import com.cloudteddy.gemcs01product.dao.ProductTypeDao;
 import com.cloudteddy.gemcs01product.dao.model.Product;
+import com.cloudteddy.gemcs01product.dao.model.Response;
+import com.cloudteddy.gemcs01product.rest.Constant;
 import com.cloudteddy.gemcs01product.rest.message.AllProductResponse;
 import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -102,8 +109,30 @@ public class ProductController {
     @RequestMapping("/detail")
     public AllProductResponse.ProductItem viewDetail(
             @RequestParam(name = "id", defaultValue = "0") int id) {
+
         Product product = productDao.getById(id);
         return new AllProductResponse.ProductItem(product.getId(), product.getName(), product.getDetail(), product.getType().getName());
     }
 
+    @RequestMapping(value = "/update",
+            method = RequestMethod.POST,
+            consumes = "application/json")
+    public Response processJson(
+            @RequestBody @Valid Product product, BindingResult error) {
+        if(error.hasErrors()) return new Response(false,error.getAllErrors().get(0).toString(),null);
+        try{
+            productDao.update(product);
+            return new Response(false, Constant.HTTPSUCCESS,null);
+        }catch (Exception e){
+            return new Response(false,e.getClass()+" "+e.getMessage(),null);
+        }
+
+    }
+
+    @RequestMapping(value = "/get-products")
+    public
+    @ResponseBody
+    List<Product> getProducts(@RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum) {
+        return productDao.getProducts(pageNum, pageSize);
+    }
 }

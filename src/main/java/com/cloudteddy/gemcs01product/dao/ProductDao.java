@@ -11,7 +11,9 @@ public interface ProductDao {
 
     List<Product> list();
 
-    List<Product> list(int pageNum, int pageSize);
+    List<Product> getProducts(int pageNum,int pageSize);
+
+    public List<Product> list(int pageNum, int pageSize);
 
     Long count();
 

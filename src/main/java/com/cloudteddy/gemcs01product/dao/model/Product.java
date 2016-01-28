@@ -1,5 +1,6 @@
 package com.cloudteddy.gemcs01product.dao.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 
@@ -32,6 +33,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "type", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     private Type type;
 
     @org.hibernate.annotations.Type(type = "text")
@@ -39,15 +41,19 @@ public class Product {
     private String detail;
 
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Bill.BillLine> billLines = new HashSet<>(0);
 
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Inventory.ProductInInventory> inventories = new HashSet<>(0);
 
     @ManyToMany(mappedBy = "products")
+    @JsonIgnore
     private Set<Promotion> promotions = new HashSet<>(0);
 
     @OneToMany(mappedBy = "id.product")
+    @JsonIgnore
     private Set<Price> prices = new HashSet<>(0);
 
     public Product() {
@@ -165,6 +171,7 @@ public class Product {
         private String name;
 
         @OneToMany(mappedBy = "type", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+        @JsonIgnore
         private Set<Product> products;
 
         public Type(String name) {
