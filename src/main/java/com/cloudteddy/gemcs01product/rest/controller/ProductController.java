@@ -3,6 +3,7 @@ package com.cloudteddy.gemcs01product.rest.controller;
 import com.cloudteddy.gemcs01product.dao.ProductDao;
 import com.cloudteddy.gemcs01product.dao.model.Product;
 import com.cloudteddy.gemcs01product.rest.message.AllProductResponse;
+import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +24,7 @@ public class ProductController {
     @RequestMapping()
     public AllProductResponse list(
             @RequestParam(name = "pageSize", defaultValue = "25") int pageSize,
-            @RequestParam(name = "page", defaultValue = "1") int pageNum ){
+            @RequestParam(name = "page", defaultValue = "1") int pageNum) {
 
         List<Product> products = productDao.list(pageNum, pageSize);
         AllProductResponse response = new AllProductResponse();
@@ -54,5 +55,32 @@ public class ProductController {
         return "Bug again? wtf!!!";
     }
 
+    @RequestMapping("/insert")
+    public String insert(@RequestParam(name = "product") Product product) {
+        try {
+            productDao.insert(product);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Insert " + product.toString();
+    }
 
+    @RequestMapping("/delete")
+    public String delete(
+            @RequestParam(name = "id") long id) {
+        try {
+            Product product = new Product();
+            product.setId(id);
+            productDao.delete(product);
+        } catch (Exception e) {
+            /**
+             * handle object not found
+             */
+            return "Object not found";
+        }
+        /**
+         * handle deleted
+         */
+        return "Deleted item " + id;
+    }
 }

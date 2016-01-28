@@ -9,7 +9,6 @@ import java.util.List;
  */
 public interface ProductDao {
 
-    void insert(Product product);
 
     List<Product> list();
 
@@ -17,10 +16,11 @@ public interface ProductDao {
 
     Long count();
 
-    Product getById();
+    Product getById(long id);
 
     void update(Product product);
 
     void delete(Product product);
 
+    void insert(Product product);
 }

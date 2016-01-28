@@ -36,11 +36,11 @@ public class Dealer {
     private Set<Bill> bills = new HashSet<>(0);
 
     @ManyToMany()
-    @JoinTable(name = "maker_dealer",
+    @JoinTable(name = "make_dealer",
             joinColumns = {@JoinColumn(name = "dealer_id")},
-            inverseJoinColumns = {@JoinColumn(name = "maker_id")}
+            inverseJoinColumns = {@JoinColumn(name = "make_id")}
     )
-    private Set<Maker> makers = new HashSet<>(0);
+    private Set<Make> makes = new HashSet<>(0);
 
     @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL)
     private Set<Promotion> promotions = new HashSet<>(0);
@@ -105,12 +105,12 @@ public class Dealer {
         this.bills = bills;
     }
 
-    public Set<Maker> getMakers() {
-        return makers;
+    public Set<Make> getMakes() {
+        return makes;
     }
 
-    public void setMakers(Set<Maker> makers) {
-        this.makers = makers;
+    public void setMakes(Set<Make> makes) {
+        this.makes = makes;
     }
 
     public Set<Promotion> getPromotions() {

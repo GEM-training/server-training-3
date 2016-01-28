@@ -50,11 +50,18 @@ public class Product {
     @OneToMany(mappedBy = "id.product")
     private Set<Price> prices = new HashSet<>(0);
 
-    public Product() {}
+    public Product() {
+    }
 
     public Product(String name, Type type) {
         this.name = name;
         this.type = type;
+    }
+
+    public Product(Product product) {
+        this.name = product.getName();
+        this.detail = product.getDetail();
+        this.type = product.getType();
     }
 
     public String getName() {
@@ -157,7 +164,8 @@ public class Product {
             this.name = name;
         }
 
-        public Type() {}
+        public Type() {
+        }
 
         public long getId() {
             return id;

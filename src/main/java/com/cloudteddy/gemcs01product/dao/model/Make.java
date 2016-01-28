@@ -8,12 +8,12 @@ import java.util.Set;
  * Created by kimtung on 1/20/16.
  */
 @Entity
-@Table(name = "maker")
-public class Maker {
+@Table(name = "make")
+public class Make {
 
     @Id
-    @SequenceGenerator(name = "maker_id_seq", sequenceName = "maker_id_seq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "maker_id_seq")
+    @SequenceGenerator(name = "make_id_seq", sequenceName = "make_id_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "make_id_seq")
     @Column(name = "id", nullable = false, unique = true)
     private long id;
 
@@ -26,7 +26,7 @@ public class Maker {
     @Column(name = "address", nullable = true)
     private String address;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "makers")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "makes")
     private Set<Dealer> dealers = new HashSet<>(0);
 
     public long getId() {

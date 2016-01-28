@@ -18,11 +18,6 @@ import java.util.List;
 public class ProductDaoImpl extends AbstractDao implements ProductDao {
 
     @Override
-    public void insert(Product product) {
-
-    }
-
-    @Override
     public List<Product> list() {
         Criteria criteria = getSession().createCriteria(Product.class);
         criteria.addOrder(Order.asc("name"));
@@ -33,7 +28,7 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
     public List<Product> list(int pageNum, int pageSize) {
         Criteria criteria = getSession().createCriteria(Product.class);
         criteria.addOrder(Order.asc("name"))
-                .setFirstResult(pageSize*pageNum)
+                .setFirstResult(pageSize * pageNum)
                 .setMaxResults(pageSize)
                 .setCacheable(true);
         return criteria.list();
@@ -47,7 +42,7 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
     }
 
     @Override
-    public Product getById() {
+    public Product getById(long id) {
         return null;
     }
 
@@ -57,7 +52,12 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
     }
 
     @Override
-    public void delete(Product product) {
+    public void insert(Product product) {
+        getSession().save(product);
+    }
 
+    @Override
+    public void delete(Product product) {
+        getSession().delete(product);
     }
 }
