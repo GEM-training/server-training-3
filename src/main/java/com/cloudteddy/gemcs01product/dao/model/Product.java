@@ -1,10 +1,14 @@
 package com.cloudteddy.gemcs01product.dao.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.solr.analysis.LowerCaseFilterFactory;
+import org.apache.solr.analysis.NGramFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
+import org.apache.solr.analysis.WordDelimiterFilterFactory;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Parameter;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
@@ -23,16 +27,28 @@ import java.util.Set;
         indexes = {@Index(name = "product_name_index", columnList = "name asc")})
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "product")
 @Indexed
+@AnalyzerDef(name = "nGramAnalyzer",
+        tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+        filters = {
+                @TokenFilterDef(factory = WordDelimiterFilterFactory.class),
+                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                @TokenFilterDef(factory = NGramFilterFactory.class, params = {
+                        @Parameter(name = "minGramSize", value = "1"),
+                        @Parameter(name = "maxGramSize", value = "5")
+                }),
+        }
+)
 public class Product {
 
     @Id
     @SequenceGenerator(name = "product_id_seq", sequenceName = "product_id_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_seq")
     @Column(name = "id", nullable = false, unique = true)
+    @DocumentId
     private long id;
 
     @Column(name = "name", nullable = false)
-    @Field
+    @Field(name = "name", analyzer = @Analyzer(definition = "nGramAnalyzer"))
     private String name;
 
     @ManyToOne
@@ -41,7 +57,7 @@ public class Product {
 
     @org.hibernate.annotations.Type(type = "text")
     @Column(name = "detail", nullable = true)
-    @Field
+    @Field(name = "detail", analyzer = @Analyzer(definition = "nGramAnalyzer"))
     private String detail;
 
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
