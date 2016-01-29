@@ -20,7 +20,7 @@ import java.util.List;
  * Created by kimtung on 1/27/16.
  */
 @Repository("dao_product")
-@Transactional
+@Transactional()
 public class ProductDaoImpl extends AbstractDao implements ProductDao {
 
     @Override
