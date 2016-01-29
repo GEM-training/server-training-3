@@ -16,7 +16,6 @@ import java.util.List;
  * Created by kimtung on 29/01/16.
  */
 @Service("service_product")
-@Transactional
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
@@ -28,6 +27,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public List<Product> list(ProductFilter productFilter) {
         return productDao.list(productFilter);
     }
@@ -43,21 +43,25 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public void update(Product product) {
         productDao.update(product);
     }
 
     @Override
+    @Transactional
     public void delete(Product product) {
         productDao.delete(product);
     }
 
     @Override
+    @Transactional
     public void insert(Product product) {
         productDao.insert(product);
     }
 
     @Override
+    @Transactional
     public Response insert2(ListProduct listProduct) {
         return null;
     }

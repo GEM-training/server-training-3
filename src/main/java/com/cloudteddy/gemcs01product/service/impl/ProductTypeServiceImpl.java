@@ -17,7 +17,6 @@ import java.util.List;
  * Created by kimtung on 29/01/16.
  */
 @Service("service_productType")
-@Transactional
 public class ProductTypeServiceImpl implements ProductTypeService {
 
     @Autowired
@@ -28,6 +27,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
 
     @Override
+    @Transactional
     public List<Product.Type> list() {
         return productTypeDao.list();
     }
@@ -48,20 +48,24 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     }
 
     @Override
+    @Transactional
     public void update(Product.Type type) {
         productTypeDao.update(type);
     }
 
     @Override
+    @Transactional
     public void delete(Product.Type type) {
         productTypeDao.insert(type);
     }
 
     @Override
+    @Transactional
     public void insert(Product.Type type) {
         productTypeDao.insert(type);
     }
 
+    @Transactional
     public Response insert2(ListProduct productlist) {
         if (productlist.productItemList.get(0).getName() == null) {
             throw new CustomRuntimeException("Name is empty");
