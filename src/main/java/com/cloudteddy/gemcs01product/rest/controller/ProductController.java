@@ -107,24 +107,30 @@ public class ProductController {
     }
 
     @RequestMapping("/detail")
-    public AllProductResponse.ProductItem viewDetail(
+    public Response viewDetail(
             @RequestParam(name = "id", defaultValue = "0") int id) {
-
         Product product = productDao.getById(id);
-        return new AllProductResponse.ProductItem(product.getId(), product.getName(), product.getDetail(), product.getType().getName());
+        return new Response(true,"",product);
     }
 
     @RequestMapping(value = "/update",
             method = RequestMethod.POST,
             consumes = "application/json")
     public Response processJson(
-            @RequestBody @Valid Product product, BindingResult error) {
-        if(error.hasErrors()) return new Response(false,error.getAllErrors().get(0).toString(),null);
-        try{
-            productDao.update(product);
-            return new Response(false, Constant.HTTPSUCCESS,null);
-        }catch (Exception e){
-            return new Response(false,e.getClass()+" "+e.getMessage(),null);
+            @RequestBody @Valid AllProductResponse.ProductItem productItem, BindingResult error) {
+        if (error.hasErrors()) return new Response(false, error.getAllErrors().get(0).toString(), null);
+        try {
+
+            Product p = productDao.getById(productItem.getId());
+            p.setName(productItem.getName());
+            p.setDetail(productItem.getDetail());
+            Product.Type t = productTypeDao.getByName(productItem.getType());
+            p.setType(t);
+
+            productDao.update(p);
+            return new Response(false, Constant.HTTPSUCCESS, null);
+        } catch (Exception e) {
+            return new Response(false, e.getMessage(), null);
         }
 
     }

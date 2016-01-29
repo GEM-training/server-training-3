@@ -60,6 +60,8 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
 
     @Override
     public void update(Product product) {
+        System.out.print(product.getType());
+        getSession().update(product);
     }
 
     @Override
