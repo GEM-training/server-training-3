@@ -3,10 +3,12 @@ package com.cloudteddy.gemcs01product.rest.controller;
 import com.cloudteddy.gemcs01product.dao.ProductDao;
 import com.cloudteddy.gemcs01product.dao.filter.ProductFilter;
 import com.cloudteddy.gemcs01product.dao.ProductTypeDao;
+import com.cloudteddy.gemcs01product.dao.model.ListProduct;
 import com.cloudteddy.gemcs01product.dao.model.Product;
 import com.cloudteddy.gemcs01product.rest.message.Response;
 import com.cloudteddy.gemcs01product.rest.Constant;
 import com.cloudteddy.gemcs01product.rest.message.ProductListResponse;
+import com.cloudteddy.gemcs01product.rest.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,12 +33,15 @@ public class ProductController {
     @Autowired
     private ProductTypeDao productTypeDao;
 
+    @Autowired
+    private ProductService productService;
+
     @RequestMapping()
     @Transactional
     public ProductListResponse list(
             @RequestParam(name = "keyword", required = false) String keyword,
             @RequestParam(name = "pageSize", defaultValue = "25") int pageSize,
-            @RequestParam(name = "page", defaultValue = "0") int pageNum ){
+            @RequestParam(name = "page", defaultValue = "0") int pageNum) {
 
         ProductFilter filter = new ProductFilter();
         filter.setKeyword(keyword)
@@ -116,9 +121,9 @@ public class ProductController {
     public Response viewDetail(
             @RequestParam(name = "id", defaultValue = "0") int id) {
         Product product = productDao.getById(id);
-        if(product==null){
-            return new Response(false,"Product null!",null);
-        }else {
+        if (product == null) {
+            return new Response(false, "Product null!", null);
+        } else {
             return new Response(true, "", product);
         }
     }
@@ -126,7 +131,7 @@ public class ProductController {
     @RequestMapping(value = "/update",
             method = RequestMethod.POST,
             consumes = "application/json")
-    public Response processJson(
+    public Response updateProduct(
             @RequestBody @Valid ProductListResponse.ProductItem productItem, BindingResult error) {
         if (error.hasErrors()) return new Response(false, error.getAllErrors().get(0).toString(), null);
         try {
@@ -143,6 +148,19 @@ public class ProductController {
             return new Response(false, e.getMessage(), null);
         }
 
+    }
+
+
+    @RequestMapping(value = "/insert2",
+            method = RequestMethod.POST,
+            consumes = "application/json")
+    public Response insert2Product(
+            @RequestBody @Valid ListProduct productlist, BindingResult error) {
+        try {
+            return productService.insert2(productlist);
+        } catch (Exception e) {
+            return new Response(false, "", null);
+        }
     }
 
 }
