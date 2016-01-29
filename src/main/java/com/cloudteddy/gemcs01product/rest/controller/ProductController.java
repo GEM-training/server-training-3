@@ -36,7 +36,7 @@ public class ProductController {
     public ProductListResponse list(
             @RequestParam(name = "keyword", required = false) String keyword,
             @RequestParam(name = "pageSize", defaultValue = "25") int pageSize,
-            @RequestParam(name = "page", defaultValue = "0") int pageNum ){
+            @RequestParam(name = "page", defaultValue = "0") int pageNum) {
 
         ProductFilter filter = new ProductFilter();
         filter.setKeyword(keyword)
@@ -116,9 +116,9 @@ public class ProductController {
     public Response viewDetail(
             @RequestParam(name = "id", defaultValue = "0") int id) {
         Product product = productDao.getById(id);
-        if(product==null){
-            return new Response(false,"Product null!",null);
-        }else {
+        if (product == null) {
+            return new Response(false, "Product null!", null);
+        } else {
             return new Response(true, "", product);
         }
     }
