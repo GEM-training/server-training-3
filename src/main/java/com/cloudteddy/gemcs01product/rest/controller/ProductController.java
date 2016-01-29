@@ -125,7 +125,7 @@ public class ProductController {
             method = RequestMethod.POST,
             consumes = "application/json")
     public Response processJson(
-            @RequestBody @Valid AllProductResponse.ProductItem productItem, BindingResult error) {
+            @RequestBody @Valid ProductListResponse.ProductItem productItem, BindingResult error) {
         if (error.hasErrors()) return new Response(false, error.getAllErrors().get(0).toString(), null);
         try {
 
