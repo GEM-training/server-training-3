@@ -1,17 +1,15 @@
 package com.cloudteddy.gemcs01product.rest.controller;
 
-import com.cloudteddy.gemcs01product.dao.ProductDao;
-import com.cloudteddy.gemcs01product.dao.filter.ProductFilter;
 import com.cloudteddy.gemcs01product.dao.ProductTypeDao;
+import com.cloudteddy.gemcs01product.dao.filter.ProductFilter;
+import com.cloudteddy.gemcs01product.dao.model.ListProduct;
 import com.cloudteddy.gemcs01product.dao.model.Product;
-import com.cloudteddy.gemcs01product.rest.message.Response;
 import com.cloudteddy.gemcs01product.rest.Constant;
 import com.cloudteddy.gemcs01product.rest.message.ProductListResponse;
+import com.cloudteddy.gemcs01product.rest.message.Response;
+import com.cloudteddy.gemcs01product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +24,7 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    private ProductDao productDao;
+    private ProductService productService;
 
     @Autowired
     private ProductTypeDao productTypeDao;
@@ -36,13 +34,13 @@ public class ProductController {
     public ProductListResponse list(
             @RequestParam(name = "keyword", required = false) String keyword,
             @RequestParam(name = "pageSize", defaultValue = "25") int pageSize,
-            @RequestParam(name = "page", defaultValue = "0") int pageNum) {
+            @RequestParam(name = "page", defaultValue = "0") int pageNum ){
 
         ProductFilter filter = new ProductFilter();
         filter.setKeyword(keyword)
                 .setPageSize(pageSize)
                 .setPage(pageNum);
-        List<Product> products = productDao.list(filter);
+        List<Product> products = productService.list(filter);
 
         ProductListResponse response = new ProductListResponse();
         response.setPage(pageNum);
@@ -59,7 +57,7 @@ public class ProductController {
 
     @RequestMapping("/count")
     public Long count() {
-        return productDao.count();
+        return productService.count();
     }
 
     @RequestMapping("*")
@@ -81,7 +79,7 @@ public class ProductController {
                 return new Response(false, "type is empty", product);
             } else {
                 System.out.println(product.getType());
-                productDao.insert(new Product(product.getName(), product.getDetail(), productTypeDao.getTypeByName(product.getType())));
+                productService.insert(new Product(product.getName(), product.getDetail(), productTypeDao.getByName(product.getType())));
             }
         } catch (Exception e) {
             /**
@@ -99,7 +97,7 @@ public class ProductController {
     public Response delete(
             @RequestParam(name = "id") long id) {
         try {
-            productDao.delete(productDao.getById(id));
+            productService.delete(productService.getById(id));
         } catch (Exception e) {
             /**
              * handle object not found
@@ -115,7 +113,7 @@ public class ProductController {
     @RequestMapping("/detail")
     public Response viewDetail(
             @RequestParam(name = "id", defaultValue = "0") int id) {
-        Product product = productDao.getById(id);
+        Product product = productService.getById(id);
         if (product == null) {
             return new Response(false, "Product null!", null);
         } else {
@@ -126,23 +124,35 @@ public class ProductController {
     @RequestMapping(value = "/update",
             method = RequestMethod.POST,
             consumes = "application/json")
-    public Response processJson(
+    public Response updateProduct(
             @RequestBody @Valid ProductListResponse.ProductItem productItem, BindingResult error) {
         if (error.hasErrors()) return new Response(false, error.getAllErrors().get(0).toString(), null);
         try {
 
-            Product p = productDao.getById(productItem.getId());
+            Product p = productService.getById(productItem.getId());
             p.setName(productItem.getName());
             p.setDetail(productItem.getDetail());
-            Product.Type t = productTypeDao.getTypeByName(productItem.getType());
+            Product.Type t = productTypeDao.getByName(productItem.getType());
             p.setType(t);
-
-            productDao.update(p);
+            productService.update(p);
             return new Response(false, Constant.HTTPSUCCESS, null);
         } catch (Exception e) {
             return new Response(false, e.getMessage(), null);
         }
 
+    }
+
+
+    @RequestMapping(value = "/insert2",
+            method = RequestMethod.POST,
+            consumes = "application/json")
+    public Response insert2Product(
+            @RequestBody @Valid ListProduct productlist, BindingResult error) {
+        try {
+            return productService.insert2(productlist);
+        } catch (Exception e) {
+            return new Response(false, "", null);
+        }
     }
 
 }

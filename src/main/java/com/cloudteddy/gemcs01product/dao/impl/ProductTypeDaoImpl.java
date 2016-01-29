@@ -19,7 +19,7 @@ import java.util.List;
 public class ProductTypeDaoImpl extends AbstractDao implements ProductTypeDao {
 
     @Override
-    public List<Product.Type> lít() {
+    public List<Product.Type> list() {
         Criteria criteria = getSession().createCriteria(Product.Type.class);
         criteria.addOrder(Order.asc("name"));
         return criteria.list();
@@ -33,14 +33,14 @@ public class ProductTypeDaoImpl extends AbstractDao implements ProductTypeDao {
     }
 
     @Override
-    public Product.Type getTypeById(long id) {
+    public Product.Type getById(long id) {
         Criteria criteria = getSession().createCriteria(Product.Type.class);
         criteria.add(Restrictions.eq("id", id));
         return (Product.Type) criteria.uniqueResult();
     }
 
     @Override
-    public Product.Type getTypeByName(String name) {
+    public Product.Type getByName(String name) {
         Criteria criteria = getSession().createCriteria(Product.Type.class);
         criteria.add((Restrictions.eq("name", name)));
         return (Product.Type) criteria.uniqueResult();
@@ -57,6 +57,6 @@ public class ProductTypeDaoImpl extends AbstractDao implements ProductTypeDao {
 
     @Override
     public void insert(Product.Type type) {
-        getSession().save(type);
+        getSession().persist(type);
     }
 }

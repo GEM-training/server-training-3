@@ -1,13 +1,13 @@
-package com.cloudteddy.gemcs01product.dao;
+package com.cloudteddy.gemcs01product.service;
 
 import com.cloudteddy.gemcs01product.dao.model.Product;
 
 import java.util.List;
 
 /**
- * Created by quanda on 28/01/2016.
+ * Created by kimtung on 29/01/16.
  */
-public interface ProductTypeDao {
+public interface ProductTypeService {
 
     List<Product.Type> list();
 
@@ -22,4 +22,5 @@ public interface ProductTypeDao {
     void delete(Product.Type type);
 
     void insert(Product.Type type);
+
 }
