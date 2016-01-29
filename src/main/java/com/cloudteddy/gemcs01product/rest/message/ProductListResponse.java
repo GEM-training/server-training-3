@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by kimtung on 1/28/16.
  */
-public class AllProductResponse {
+public class ProductListResponse {
 
     private int page = 0;
     private List<ProductItem> items = new ArrayList<>(0);
@@ -15,7 +15,7 @@ public class AllProductResponse {
         return items;
     }
 
-    public AllProductResponse setItems(List<ProductItem> items) {
+    public ProductListResponse setItems(List<ProductItem> items) {
         this.items = items;
         return this;
     }
@@ -24,7 +24,7 @@ public class AllProductResponse {
         return page;
     }
 
-    public AllProductResponse setPage(int page) {
+    public ProductListResponse setPage(int page) {
         this.page = page;
         return this;
     }

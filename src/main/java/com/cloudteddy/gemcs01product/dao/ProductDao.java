@@ -1,5 +1,6 @@
 package com.cloudteddy.gemcs01product.dao;
 
+import com.cloudteddy.gemcs01product.dao.filter.ProductFilter;
 import com.cloudteddy.gemcs01product.dao.model.Product;
 
 import java.util.List;
@@ -11,9 +12,7 @@ public interface ProductDao {
 
     List<Product> list();
 
-    List<Product> getProducts(int pageNum,int pageSize);
-
-    public List<Product> list(int pageNum, int pageSize);
+    public List<Product> list(ProductFilter productFilter);
 
     Long count();
 

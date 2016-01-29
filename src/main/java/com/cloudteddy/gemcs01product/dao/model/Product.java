@@ -3,6 +3,8 @@ package com.cloudteddy.gemcs01product.dao.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
@@ -20,6 +22,7 @@ import java.util.Set;
 @Table(name = "product",
         indexes = {@Index(name = "product_name_index", columnList = "name asc")})
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "product")
+@Indexed
 public class Product {
 
     @Id
@@ -29,15 +32,16 @@ public class Product {
     private long id;
 
     @Column(name = "name", nullable = false)
+    @Field
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "type", referencedColumnName = "id", nullable = false)
-    @JsonIgnore
     private Type type;
 
     @org.hibernate.annotations.Type(type = "text")
     @Column(name = "detail", nullable = true)
+    @Field
     private String detail;
 
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)

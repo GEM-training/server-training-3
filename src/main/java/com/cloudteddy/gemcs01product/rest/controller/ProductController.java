@@ -1,16 +1,17 @@
 package com.cloudteddy.gemcs01product.rest.controller;
 
 import com.cloudteddy.gemcs01product.dao.ProductDao;
+import com.cloudteddy.gemcs01product.dao.filter.ProductFilter;
 import com.cloudteddy.gemcs01product.dao.ProductTypeDao;
 import com.cloudteddy.gemcs01product.dao.model.Product;
 import com.cloudteddy.gemcs01product.dao.model.Response;
 import com.cloudteddy.gemcs01product.rest.Constant;
-import com.cloudteddy.gemcs01product.rest.message.AllProductResponse;
-import org.hibernate.Criteria;
+import com.cloudteddy.gemcs01product.rest.message.ProductListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,15 +32,22 @@ public class ProductController {
     private ProductTypeDao productTypeDao;
 
     @RequestMapping()
-    public AllProductResponse list(
+    @Transactional
+    public ProductListResponse list(
+            @RequestParam(name = "keyword", required = false) String keyword,
             @RequestParam(name = "pageSize", defaultValue = "25") int pageSize,
-            @RequestParam(name = "pageNum", defaultValue = "1") int pageNum) {
+            @RequestParam(name = "page", defaultValue = "0") int pageNum ){
 
-        List<Product> products = productDao.list(pageNum, pageSize);
-        AllProductResponse response = new AllProductResponse();
+        ProductFilter filter = new ProductFilter();
+        filter.setKeyword(keyword)
+                .setPageSize(pageSize)
+                .setPage(pageNum);
+        List<Product> products = productDao.list(filter);
+
+        ProductListResponse response = new ProductListResponse();
         response.setPage(pageNum);
         for (Product product : products) {
-            AllProductResponse.ProductItem item = new AllProductResponse.ProductItem();
+            ProductListResponse.ProductItem item = new ProductListResponse.ProductItem();
             item.setId(product.getId())
                     .setName(product.getName())
                     .setType(product.getType().getName())
@@ -65,7 +73,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST, consumes = "application/json")
-    public String insert(@RequestBody AllProductResponse.ProductItem product) {
+    public String insert(@RequestBody ProductListResponse.ProductItem product) {
         try {
             if (product.getName() == null) {
                 return "Name is empty";
@@ -107,11 +115,11 @@ public class ProductController {
     }
 
     @RequestMapping("/detail")
-    public AllProductResponse.ProductItem viewDetail(
+    public ProductListResponse.ProductItem viewDetail(
             @RequestParam(name = "id", defaultValue = "0") int id) {
 
         Product product = productDao.getById(id);
-        return new AllProductResponse.ProductItem(product.getId(), product.getName(), product.getDetail(), product.getType().getName());
+        return new ProductListResponse.ProductItem(product.getId(), product.getName(), product.getDetail(), product.getType().getName());
     }
 
     @RequestMapping(value = "/update",
@@ -129,10 +137,4 @@ public class ProductController {
 
     }
 
-    @RequestMapping(value = "/get-products")
-    public
-    @ResponseBody
-    List<Product> getProducts(@RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum) {
-        return productDao.getProducts(pageNum, pageSize);
-    }
 }
