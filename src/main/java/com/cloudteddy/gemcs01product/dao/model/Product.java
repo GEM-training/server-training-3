@@ -3,12 +3,14 @@ package com.cloudteddy.gemcs01product.dao.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,17 +28,22 @@ public class Product {
     @SequenceGenerator(name = "product_id_seq", sequenceName = "product_id_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_seq")
     @Column(name = "id", nullable = false, unique = true)
+    @NotNull(message = "id not null")
     private long id;
 
     @Column(name = "name", nullable = false)
+    @Length(min = 1, max = 255, message = "name too long")
+    @NotNull(message = "name not null")
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "type", referencedColumnName = "id", nullable = false)
     @JsonIgnore
+    @NotNull(message = "type not null")
     private Type type;
 
     @org.hibernate.annotations.Type(type = "text")
+    @Length(max = 2000, message = "detail too long")
     @Column(name = "detail", nullable = true)
     private String detail;
 

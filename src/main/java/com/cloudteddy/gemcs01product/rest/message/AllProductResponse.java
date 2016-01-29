@@ -80,5 +80,15 @@ public class AllProductResponse {
 
         public ProductItem() {
         }
+
+        @Override
+        public String toString() {
+            return "ProductItem{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    ", detail='" + detail + '\'' +
+                    ", type='" + type + '\'' +
+                    '}';
+        }
     }
 }

@@ -33,14 +33,14 @@ public class ProductTypeDaoImpl extends AbstractDao implements ProductTypeDao {
     }
 
     @Override
-    public Product.Type getById(long id) {
+    public Product.Type getTypeById(long id) {
         Criteria criteria = getSession().createCriteria(Product.Type.class);
         criteria.add(Restrictions.eq("id", id));
         return (Product.Type) criteria.uniqueResult();
     }
 
     @Override
-    public Product.Type getByName(String name) {
+    public Product.Type getTypeByName(String name) {
         Criteria criteria = getSession().createCriteria(Product.Type.class);
         criteria.add((Restrictions.eq("name", name)));
         return (Product.Type) criteria.uniqueResult();

@@ -1,4 +1,4 @@
-package com.cloudteddy.gemcs01product.dao.model;
+package com.cloudteddy.gemcs01product.rest.message;
 
 
 /**

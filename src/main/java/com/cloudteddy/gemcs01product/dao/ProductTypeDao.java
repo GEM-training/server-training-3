@@ -13,9 +13,9 @@ public interface ProductTypeDao {
 
     Long count();
 
-    Product.Type getById(long id);
+    Product.Type getTypeById(long id);
 
-    Product.Type getByName(String name);
+    Product.Type getTypeByName(String name);
 
     void update(Product.Type type);
 

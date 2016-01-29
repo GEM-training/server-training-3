@@ -3,14 +3,10 @@ package com.cloudteddy.gemcs01product.rest.controller;
 import com.cloudteddy.gemcs01product.dao.ProductDao;
 import com.cloudteddy.gemcs01product.dao.ProductTypeDao;
 import com.cloudteddy.gemcs01product.dao.model.Product;
-import com.cloudteddy.gemcs01product.dao.model.Response;
+import com.cloudteddy.gemcs01product.rest.message.Response;
 import com.cloudteddy.gemcs01product.rest.Constant;
 import com.cloudteddy.gemcs01product.rest.message.AllProductResponse;
-import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,61 +51,58 @@ public class ProductController {
     }
 
     @RequestMapping("*")
-    public String fallback() {
-        return "I don't know what you're asking :3";
+    public Response fallback() {
+        return new Response(false, "I don't know what you're asking :3", null);
     }
 
     @RequestMapping("/error")
-    public String error() {
-        return "Bug again? wtf!!!";
+    public Response error() {
+        return new Response(false, "Bug again? wtf!!!", null);
     }
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST, consumes = "application/json")
-    public String insert(@RequestBody AllProductResponse.ProductItem product) {
+    public Response insert(@RequestBody AllProductResponse.ProductItem product) {
         try {
             if (product.getName() == null) {
-                return "Name is empty";
+                return new Response(false, "name is empty", product);
             } else if (product.getType() == null) {
-                return "Type is empty";
+                return new Response(false, "type is empty", product);
             } else {
-                productDao.insert(new Product(product.getName(), product.getDetail(), productTypeDao.getByName(product.getType())));
+                System.out.println(product.getType());
+                productDao.insert(new Product(product.getName(), product.getDetail(), productTypeDao.getTypeByName(product.getType())));
             }
         } catch (Exception e) {
             /**
              * handle insert error
              */
-            e.printStackTrace();
-            return "Error";
+            return new Response(false, e.toString(), product);
         }
         /**
          * Handle inserted
          */
-        return "Insert " + product.toString();
+        return new Response(true, "inserted", product);
     }
 
-    @RequestMapping("/delete")
-    public String delete(
+    @RequestMapping(value = "/delete")
+    public Response delete(
             @RequestParam(name = "id") long id) {
         try {
-            Product product = new Product();
-            product.setId(id);
-            productDao.delete(product);
+            productDao.delete(productDao.getById(id));
         } catch (Exception e) {
             /**
              * handle object not found
              */
-            return "Object not found";
+            return new Response(false, "item not found", id);
         }
         /**
          * handle deleted
          */
-        return "Deleted item " + id;
+        return new Response(true, "deleted item", id);
     }
 
     @RequestMapping("/detail")
     public AllProductResponse.ProductItem viewDetail(
             @RequestParam(name = "id", defaultValue = "0") int id) {
-
         Product product = productDao.getById(id);
         return new AllProductResponse.ProductItem(product.getId(), product.getName(), product.getDetail(), product.getType().getName());
     }
@@ -119,12 +112,12 @@ public class ProductController {
             consumes = "application/json")
     public Response processJson(
             @RequestBody @Valid Product product, BindingResult error) {
-        if(error.hasErrors()) return new Response(false,error.getAllErrors().get(0).toString(),null);
-        try{
+        if (error.hasErrors()) return new Response(false, error.getAllErrors().get(0).toString(), null);
+        try {
             productDao.update(product);
-            return new Response(false, Constant.HTTPSUCCESS,null);
-        }catch (Exception e){
-            return new Response(false,e.getClass()+" "+e.getMessage(),null);
+            return new Response(false, Constant.HTTPSUCCESS, null);
+        } catch (Exception e) {
+            return new Response(false, e.getClass() + " " + e.getMessage(), null);
         }
 
     }
