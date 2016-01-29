@@ -36,11 +36,12 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
             FullTextSession fullTextSession = Search.getFullTextSession(getSession());
             QueryBuilder queryBuilder = fullTextSession.getSearchFactory()
                     .buildQueryBuilder().forEntity(Product.class).get();
-            Query luceneQuery = queryBuilder.keyword().onFields("name", "detail")
-                    .matching(filter.getKeyword()).createQuery();
+            Query luceneQuery = queryBuilder.keyword()
+                    .onFields("name_ngram", "detail_ngram")
+                    .matching(filter.getKeyword().toLowerCase()).createQuery();
             org.hibernate.Query hibernateQuery = fullTextSession.createFullTextQuery(luceneQuery, Product.class);
-//            hibernateQuery.setFirstResult(filter.getPage() * filter.getPageSize());
-//            hibernateQuery.setMaxResults(filter.getPageSize());
+            hibernateQuery.setFirstResult(filter.getPage() * filter.getPageSize());
+            hibernateQuery.setMaxResults(filter.getPageSize());
             return hibernateQuery.list();
         } else {
             Criteria criteria = getSession().createCriteria(Product.class);
