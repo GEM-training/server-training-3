@@ -116,7 +116,11 @@ public class ProductController {
     public Response viewDetail(
             @RequestParam(name = "id", defaultValue = "0") int id) {
         Product product = productDao.getById(id);
-        return new Response(true,"",product);
+        if(product==null){
+            return new Response(false,"Product null!",null);
+        }else {
+            return new Response(true, "", product);
+        }
     }
 
     @RequestMapping(value = "/update",
