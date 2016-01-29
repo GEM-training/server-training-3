@@ -14,8 +14,7 @@ public abstract class AbstractDao {
     private SessionFactory sessionFactory;
 
     protected Session getSession() {
-        Session session = sessionFactory.openSession();
-        session.setFlushMode(FlushMode.ALWAYS);
+        Session session = sessionFactory.getCurrentSession();
         return session;
     }
 
