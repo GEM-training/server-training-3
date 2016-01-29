@@ -45,7 +45,6 @@ public class Product {
     private String detail;
 
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
-    @JsonIgnore
     private Set<Bill.BillLine> billLines = new HashSet<>(0);
 
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
