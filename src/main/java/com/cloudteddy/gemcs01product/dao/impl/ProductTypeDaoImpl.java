@@ -15,7 +15,7 @@ import java.util.List;
  * Created by quanda on 28/01/2016.
  */
 @Repository("dao_product_type")
-@Transactional
+//@Transactional
 public class ProductTypeDaoImpl extends AbstractDao implements ProductTypeDao {
 
     @Override
