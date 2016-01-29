@@ -73,7 +73,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST, consumes = "application/json")
-    public Response insert(@RequestBody AllProductResponse.ProductItem product) {
+    public Response insert(@RequestBody ProductListResponse.ProductItem product) {
         try {
             if (product.getName() == null) {
                 return new Response(false, "name is empty", product);
@@ -130,7 +130,7 @@ public class ProductController {
             Product p = productDao.getById(productItem.getId());
             p.setName(productItem.getName());
             p.setDetail(productItem.getDetail());
-            Product.Type t = productTypeDao.getByName(productItem.getType());
+            Product.Type t = productTypeDao.getTypeByName(productItem.getType());
             p.setType(t);
 
             productDao.update(p);
