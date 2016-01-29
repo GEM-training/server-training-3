@@ -1,15 +1,17 @@
-package com.cloudteddy.gemcs01product.dao;
+package com.cloudteddy.gemcs01product.service;
 
 import com.cloudteddy.gemcs01product.dao.filter.ProductFilter;
+import com.cloudteddy.gemcs01product.dao.model.ListProduct;
 import com.cloudteddy.gemcs01product.dao.model.Product;
+import com.cloudteddy.gemcs01product.rest.message.Response;
 
 import java.util.List;
 
 /**
- * Created by kimtung on 1/27/16.
+ * Created by kimtung on 29/01/16.
  */
-public interface ProductDao {
-
+public interface ProductService {
+    
     List<Product> list();
 
     List<Product> list(ProductFilter productFilter);
@@ -23,4 +25,6 @@ public interface ProductDao {
     void delete(Product product);
 
     void insert(Product product);
+
+    Response insert2(ListProduct listProduct);
 }
