@@ -19,7 +19,7 @@ import java.util.List;
 public class ProductTypeServiceImpl implements ProductTypeService {
 
     @Autowired
-    private ProductTypeService productTypeService;
+    private ProductTypeDao productTypeDao;
 
     @Autowired
     private ProductService productService;
@@ -27,37 +27,37 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
     @Override
     public List<Product.Type> list() {
-        return productTypeService.list();
+        return productTypeDao.list();
     }
 
     @Override
     public Long count() {
-        return productTypeService.count();
+        return productTypeDao.count();
     }
 
     @Override
     public Product.Type getById(long id) {
-        return productTypeService.getById(id);
+        return productTypeDao.getById(id);
     }
 
     @Override
     public Product.Type getByName(String name) {
-        return productTypeService.getByName(name);
+        return productTypeDao.getByName(name);
     }
 
     @Override
     public void update(Product.Type type) {
-        productTypeService.update(type);
+        productTypeDao.update(type);
     }
 
     @Override
     public void delete(Product.Type type) {
-        productTypeService.insert(type);
+        productTypeDao.insert(type);
     }
 
     @Override
     public void insert(Product.Type type) {
-        productTypeService.insert(type);
+        productTypeDao.insert(type);
     }
 
     public Response insert2(ListProduct productlist) {
@@ -66,7 +66,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         } else if (productlist.productItemList.get(0).getType() == null) {
             throw new CustomRuntimeException("type is empty");
         } else {
-            productService.insert(new Product(productlist.productItemList.get(0).getName(), productlist.productItemList.get(0).getDetail(), productTypeService.getByName(productlist.productItemList.get(0).getType())));
+            productService.insert(new Product(productlist.productItemList.get(0).getName(), productlist.productItemList.get(0).getDetail(), productTypeDao.getByName(productlist.productItemList.get(0).getType())));
         }
 
         if (productlist.productItemList.get(1).getName() == null) {
@@ -74,7 +74,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         } else if (productlist.productItemList.get(1).getType() == null) {
             throw new CustomRuntimeException("type2 is empty");
         } else {
-            productService.insert(new Product(productlist.productItemList.get(1).getName(), productlist.productItemList.get(1).getDetail(), productTypeService.getByName(productlist.productItemList.get(1).getType())));
+            productService.insert(new Product(productlist.productItemList.get(1).getName(), productlist.productItemList.get(1).getDetail(), productTypeDao.getByName(productlist.productItemList.get(1).getType())));
         }
         return new Response(true, "inserted", productlist);
     }
