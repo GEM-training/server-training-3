@@ -1,6 +1,5 @@
 package com.cloudteddy.gemcs01product.rest.controller;
 
-import com.cloudteddy.gemcs01product.dao.ProductTypeDao;
 import com.cloudteddy.gemcs01product.dao.filter.ProductFilter;
 import com.cloudteddy.gemcs01product.dao.model.ListProduct;
 import com.cloudteddy.gemcs01product.dao.model.Product;
@@ -8,8 +7,8 @@ import com.cloudteddy.gemcs01product.rest.Constant;
 import com.cloudteddy.gemcs01product.rest.message.ProductListResponse;
 import com.cloudteddy.gemcs01product.rest.message.Response;
 import com.cloudteddy.gemcs01product.service.ProductService;
+import com.cloudteddy.gemcs01product.service.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,10 +26,9 @@ public class ProductController {
     private ProductService productService;
 
     @Autowired
-    private ProductTypeDao productTypeDao;
+    private ProductTypeService productTypeService;
 
     @RequestMapping()
-    @Transactional
     public ProductListResponse list(
             @RequestParam(name = "keyword", required = false) String keyword,
             @RequestParam(name = "pageSize", defaultValue = "25") int pageSize,
@@ -79,7 +77,7 @@ public class ProductController {
                 return new Response(false, "type is empty", product);
             } else {
                 System.out.println(product.getType());
-                productService.insert(new Product(product.getName(), product.getDetail(), productTypeDao.getByName(product.getType())));
+                productService.insert(new Product(product.getName(), product.getDetail(), productTypeService.getByName(product.getType())));
             }
         } catch (Exception e) {
             /**
@@ -132,7 +130,7 @@ public class ProductController {
             Product p = productService.getById(productItem.getId());
             p.setName(productItem.getName());
             p.setDetail(productItem.getDetail());
-            Product.Type t = productTypeDao.getByName(productItem.getType());
+            Product.Type t = productTypeService.getByName(productItem.getType());
             p.setType(t);
             productService.update(p);
             return new Response(false, Constant.HTTPSUCCESS, null);
