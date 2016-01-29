@@ -26,7 +26,6 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     @Autowired
     private ProductService productService;
 
-
     @Override
     @Transactional
     public List<Product.Type> list() {

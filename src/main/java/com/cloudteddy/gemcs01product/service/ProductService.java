@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * Created by kimtung on 29/01/16.
  */
+
 public interface ProductService {
     
     List<Product> list();

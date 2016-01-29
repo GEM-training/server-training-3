@@ -20,6 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/product")
+//@Transactional
 public class ProductController {
 
     @Autowired
@@ -97,14 +98,8 @@ public class ProductController {
         try {
             productService.delete(productService.getById(id));
         } catch (Exception e) {
-            /**
-             * handle object not found
-             */
             return new Response(false, "item not found", id);
         }
-        /**
-         * handle deleted
-         */
         return new Response(true, "deleted item", id);
     }
 
@@ -126,7 +121,6 @@ public class ProductController {
             @RequestBody @Valid ProductListResponse.ProductItem productItem, BindingResult error) {
         if (error.hasErrors()) return new Response(false, error.getAllErrors().get(0).toString(), null);
         try {
-
             Product p = productService.getById(productItem.getId());
             p.setName(productItem.getName());
             p.setDetail(productItem.getDetail());
@@ -140,7 +134,6 @@ public class ProductController {
 
     }
 
-
     @RequestMapping(value = "/insert2",
             method = RequestMethod.POST,
             consumes = "application/json")
@@ -149,8 +142,7 @@ public class ProductController {
         try {
             return productService.insert2(productlist);
         } catch (Exception e) {
-            return new Response(false, "", null);
+            return new Response(false, e.getMessage(), null);
         }
     }
-
 }
