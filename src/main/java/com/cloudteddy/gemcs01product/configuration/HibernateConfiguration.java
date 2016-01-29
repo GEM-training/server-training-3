@@ -19,7 +19,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({"com.cloudteddy.gemcs01product.configuration"})
+@ComponentScan({"com.cloudteddy.gemcs01product"})
 @PropertySource({"classpath:application.properties"})
 public class HibernateConfiguration {
 

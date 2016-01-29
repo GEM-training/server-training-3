@@ -16,6 +16,7 @@ import java.util.List;
  * Created by kimtung on 29/01/16.
  */
 @Service("service_product")
+@Transactional
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
