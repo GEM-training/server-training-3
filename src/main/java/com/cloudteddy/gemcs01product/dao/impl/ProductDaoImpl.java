@@ -1,11 +1,16 @@
 package com.cloudteddy.gemcs01product.dao.impl;
 
 import com.cloudteddy.gemcs01product.dao.ProductDao;
+import com.cloudteddy.gemcs01product.dao.filter.ProductFilter;
 import com.cloudteddy.gemcs01product.dao.model.Product;
+import org.apache.lucene.search.Query;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,22 +31,25 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
     }
 
     @Override
-    public List<Product> getProducts(int pageNum, int pageSize) {
-        Criteria criteria = getSession().createCriteria(Product.class);
-        criteria.addOrder(Order.asc("name"));
-        criteria.setFirstResult(pageNum*pageSize);
-        criteria.setMaxResults(pageSize);
-        return criteria.list();
-    }
-
-    @Override
-    public List<Product> list(int pageNum, int pageSize) {
-        Criteria criteria = getSession().createCriteria(Product.class);
-        criteria.addOrder(Order.asc("name"))
-                .setFirstResult(pageSize * pageNum)
-                .setMaxResults(pageSize)
-                .setCacheable(true);
-        return criteria.list();
+    public List<Product> list(ProductFilter filter) {
+        if(filter.getKeyword() != null) {
+            FullTextSession fullTextSession = Search.getFullTextSession(getSession());
+            QueryBuilder queryBuilder = fullTextSession.getSearchFactory()
+                    .buildQueryBuilder().forEntity(Product.class).get();
+            Query luceneQuery = queryBuilder.keyword()
+                    .onFields("name_ngram", "detail_ngram")
+                    .matching(filter.getKeyword().toLowerCase()).createQuery();
+            org.hibernate.Query hibernateQuery = fullTextSession.createFullTextQuery(luceneQuery, Product.class);
+            hibernateQuery.setFirstResult(filter.getPage() * filter.getPageSize());
+            hibernateQuery.setMaxResults(filter.getPageSize());
+            return hibernateQuery.list();
+        } else {
+            Criteria criteria = getSession().createCriteria(Product.class);
+            criteria.addOrder(Order.asc("name"));
+            criteria.setFirstResult(filter.getPage() * filter.getPageSize());
+            criteria.setMaxResults(filter.getPageSize());
+            return criteria.list();
+        }
     }
 
     @Override
@@ -60,6 +68,8 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
 
     @Override
     public void update(Product product) {
+        System.out.print(product.getType());
+        getSession().update(product);
     }
 
     @Override

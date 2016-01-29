@@ -1,8 +1,11 @@
 package com.cloudteddy.gemcs01product.dao.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.solr.analysis.*;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -22,16 +25,43 @@ import java.util.Set;
 @Table(name = "product",
         indexes = {@Index(name = "product_name_index", columnList = "name asc")})
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "product")
+@Indexed
+@AnalyzerDefs({
+        @AnalyzerDef(name = "nGramAnalyzer",
+                tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+                filters = {
+                        @TokenFilterDef(factory = WordDelimiterFilterFactory.class),
+                        @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                        @TokenFilterDef(factory = NGramFilterFactory.class, params = {
+                                @Parameter(name = "minGramSize", value = "2"),
+                                @Parameter(name = "maxGramSize", value = "5")
+                        }),
+                }
+        ),
+        @AnalyzerDef(name = "edgeAnalyzer",
+        tokenizer = @TokenizerDef(factory = KeywordTokenizerFactory.class),
+        filters = {
+                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                @TokenFilterDef(factory = StopFilterFactory.class),
+                @TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = {
+                        @Parameter(name = "minGramSize", value = "3"),
+                        @Parameter(name = "maxGramSize", value = "50")})})
+})
 public class Product {
 
     @Id
     @SequenceGenerator(name = "product_id_seq", sequenceName = "product_id_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_seq")
     @Column(name = "id", nullable = false, unique = true)
+    @DocumentId
     @NotNull(message = "id not null")
     private long id;
 
     @Column(name = "name", nullable = false)
+    @Fields({
+            @Field(name = "name_ngram", analyzer = @Analyzer(definition = "nGramAnalyzer")),
+            @Field(name = "name_edge", analyzer = @Analyzer(definition = "edgeAnalyzer"))
+    })
     @Length(min = 1, max = 255, message = "name too long")
     @NotNull(message = "name not null")
     private String name;
@@ -45,10 +75,13 @@ public class Product {
     @org.hibernate.annotations.Type(type = "text")
     @Length(max = 2000, message = "detail too long")
     @Column(name = "detail", nullable = true)
+    @Fields({
+            @Field(name = "detail_ngram", analyzer = @Analyzer(definition = "nGramAnalyzer")),
+            @Field(name = "detail_edge", analyzer = @Analyzer(definition = "edgeAnalyzer")),
+    })
     private String detail;
 
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
-    @JsonIgnore
     private Set<Bill.BillLine> billLines = new HashSet<>(0);
 
     @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL)
@@ -177,7 +210,7 @@ public class Product {
         @Column(name = "name", nullable = false, unique = true)
         private String name;
 
-        @OneToMany(mappedBy = "type", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+        @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
         @JsonIgnore
         private Set<Product> products;
 

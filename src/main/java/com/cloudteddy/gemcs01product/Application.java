@@ -1,6 +1,7 @@
 package com.cloudteddy.gemcs01product;
 
 import com.cloudteddy.gemcs01product.configuration.SpringConfiguration;
+import org.hibernate.search.Search;
 import org.springframework.boot.SpringApplication;
 
 /**
