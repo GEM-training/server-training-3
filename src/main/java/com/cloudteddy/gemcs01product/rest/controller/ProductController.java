@@ -1,5 +1,6 @@
 package com.cloudteddy.gemcs01product.rest.controller;
 
+import com.cloudteddy.gemcs01product.CustomRuntimeException;
 import com.cloudteddy.gemcs01product.dao.filter.ProductFilter;
 import com.cloudteddy.gemcs01product.dao.model.ListProduct;
 import com.cloudteddy.gemcs01product.dao.model.Product;
@@ -8,7 +9,9 @@ import com.cloudteddy.gemcs01product.rest.message.ProductListResponse;
 import com.cloudteddy.gemcs01product.rest.message.Response;
 import com.cloudteddy.gemcs01product.service.ProductService;
 import com.cloudteddy.gemcs01product.service.ProductTypeService;
+import org.h2.util.New;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +23,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/product")
+//@Transactional
 public class ProductController {
 
     @Autowired
@@ -32,7 +36,7 @@ public class ProductController {
     public ProductListResponse list(
             @RequestParam(name = "keyword", required = false) String keyword,
             @RequestParam(name = "pageSize", defaultValue = "25") int pageSize,
-            @RequestParam(name = "page", defaultValue = "0") int pageNum ){
+            @RequestParam(name = "page", defaultValue = "0") int pageNum) {
 
         ProductFilter filter = new ProductFilter();
         filter.setKeyword(keyword)
@@ -76,18 +80,11 @@ public class ProductController {
             } else if (product.getType() == null) {
                 return new Response(false, "type is empty", product);
             } else {
-                System.out.println(product.getType());
                 productService.insert(new Product(product.getName(), product.getDetail(), productTypeService.getByName(product.getType())));
             }
         } catch (Exception e) {
-            /**
-             * handle insert error
-             */
             return new Response(false, e.toString(), product);
         }
-        /**
-         * Handle inserted
-         */
         return new Response(true, "inserted", product);
     }
 
@@ -97,15 +94,9 @@ public class ProductController {
         try {
             productService.delete(productService.getById(id));
         } catch (Exception e) {
-            /**
-             * handle object not found
-             */
             return new Response(false, "item not found", id);
         }
-        /**
-         * handle deleted
-         */
-        return new Response(true, "deleted item", id);
+        return new Response(true, "Deleted item", id);
     }
 
     @RequestMapping("/detail")
@@ -126,7 +117,6 @@ public class ProductController {
             @RequestBody @Valid ProductListResponse.ProductItem productItem, BindingResult error) {
         if (error.hasErrors()) return new Response(false, error.getAllErrors().get(0).toString(), null);
         try {
-
             Product p = productService.getById(productItem.getId());
             p.setName(productItem.getName());
             p.setDetail(productItem.getDetail());
@@ -137,9 +127,7 @@ public class ProductController {
         } catch (Exception e) {
             return new Response(false, e.getMessage(), null);
         }
-
     }
-
 
     @RequestMapping(value = "/insert2",
             method = RequestMethod.POST,
@@ -148,9 +136,10 @@ public class ProductController {
             @RequestBody @Valid ListProduct productlist, BindingResult error) {
         try {
             return productService.insert2(productlist);
+        } catch (CustomRuntimeException e) {
+            return new Response(false, e.getMessage(), null);
         } catch (Exception e) {
-            return new Response(false, "", null);
+            return new Response(false, e.getMessage(), null);
         }
     }
-
 }

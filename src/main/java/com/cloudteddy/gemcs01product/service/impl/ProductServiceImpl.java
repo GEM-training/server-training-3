@@ -1,6 +1,8 @@
 package com.cloudteddy.gemcs01product.service.impl;
 
+import com.cloudteddy.gemcs01product.CustomRuntimeException;
 import com.cloudteddy.gemcs01product.dao.ProductDao;
+import com.cloudteddy.gemcs01product.dao.ProductTypeDao;
 import com.cloudteddy.gemcs01product.dao.filter.ProductFilter;
 import com.cloudteddy.gemcs01product.dao.model.ListProduct;
 import com.cloudteddy.gemcs01product.dao.model.Product;
@@ -21,6 +23,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductDao productDao;
+
+    @Autowired
+    private ProductTypeDao productTypeDao;
 
     @Override
     public List<Product> list() {
@@ -64,6 +69,21 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public Response insert2(ListProduct listProduct) {
-        return null;
+        if (listProduct.productItemList.get(0).getName() == null) {
+            throw new CustomRuntimeException("Name is empty");
+        } else if (listProduct.productItemList.get(0).getType() == null) {
+            throw new CustomRuntimeException("type is empty");
+        } else {
+            productDao.insert(new Product(listProduct.productItemList.get(0).getName(), listProduct.productItemList.get(0).getDetail(), productTypeDao.getByName(listProduct.productItemList.get(0).getType())));
+        }
+
+        if (listProduct.productItemList.get(1).getName() == null) {
+            throw new CustomRuntimeException("name2 is empty");
+        } else if (listProduct.productItemList.get(1).getType() == null) {
+            throw new CustomRuntimeException("type2 is empty");
+        } else {
+            productDao.insert(new Product(listProduct.productItemList.get(1).getName(), listProduct.productItemList.get(1).getDetail(), productTypeDao.getByName(listProduct.productItemList.get(1).getType())));
+        }
+        return new Response(true, "inserted", listProduct);
     }
 }

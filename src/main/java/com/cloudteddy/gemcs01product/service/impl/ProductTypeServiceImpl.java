@@ -23,10 +23,6 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     @Autowired
     private ProductTypeDao productTypeDao;
 
-    @Autowired
-    private ProductService productService;
-
-
     @Override
     @Transactional
     public List<Product.Type> list() {
@@ -66,23 +62,4 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         productTypeDao.insert(type);
     }
 
-    @Transactional
-    public Response insert2(ListProduct productlist) {
-        if (productlist.productItemList.get(0).getName() == null) {
-            throw new CustomRuntimeException("Name is empty");
-        } else if (productlist.productItemList.get(0).getType() == null) {
-            throw new CustomRuntimeException("type is empty");
-        } else {
-            productService.insert(new Product(productlist.productItemList.get(0).getName(), productlist.productItemList.get(0).getDetail(), productTypeDao.getByName(productlist.productItemList.get(0).getType())));
-        }
-
-        if (productlist.productItemList.get(1).getName() == null) {
-            throw new CustomRuntimeException("name2 is empty");
-        } else if (productlist.productItemList.get(1).getType() == null) {
-            throw new CustomRuntimeException("type2 is empty");
-        } else {
-            productService.insert(new Product(productlist.productItemList.get(1).getName(), productlist.productItemList.get(1).getDetail(), productTypeDao.getByName(productlist.productItemList.get(1).getType())));
-        }
-        return new Response(true, "inserted", productlist);
-    }
 }
