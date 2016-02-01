@@ -1,6 +1,5 @@
 package com.cloudteddy.cs01.dao.impl;
 
-import com.cloudteddy.cs01.model.Product;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

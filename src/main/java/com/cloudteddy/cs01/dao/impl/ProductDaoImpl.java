@@ -6,7 +6,6 @@ import com.cloudteddy.cs01.model.Product;
 import org.apache.lucene.search.Query;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;

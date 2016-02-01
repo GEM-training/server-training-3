@@ -3,7 +3,6 @@ package com.cloudteddy.cs01.dao;
 import com.cloudteddy.cs01.dao.filter.ProductFilter;
 import com.cloudteddy.cs01.model.Product;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**

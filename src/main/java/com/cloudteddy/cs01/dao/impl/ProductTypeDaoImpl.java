@@ -7,7 +7,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,13 +17,6 @@ public class ProductTypeDaoImpl extends AbstractDao<Product.Type> implements Pro
 
     public ProductTypeDaoImpl() {
         super(Product.Type.class);
-    }
-
-    @Override
-    public Long count() {
-        Criteria criteria = getSession().createCriteria(Product.Type.class);
-        criteria.setProjection(Projections.rowCount());
-        return (Long) criteria.uniqueResult();
     }
 
     @Override
