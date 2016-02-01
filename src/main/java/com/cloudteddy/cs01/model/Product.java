@@ -1,8 +1,8 @@
 package com.cloudteddy.cs01.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.solr.analysis.*;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.search.annotations.*;
