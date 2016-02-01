@@ -81,6 +81,39 @@ public class Inventory {
 
             @ManyToOne
             private Inventory inventory;
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+                Id id = (Id) o;
+                if (product.getId() != id.product.getId()) return false;
+                return inventory.getId() == id.inventory.getId();
+
+            }
+
+            @Override
+            public int hashCode() {
+                int result = product.hashCode();
+                result = 31 * result + inventory.hashCode();
+                return result;
+            }
+
+            public Product getProduct() {
+                return product;
+            }
+
+            public void setProduct(Product product) {
+                this.product = product;
+            }
+
+            public Inventory getInventory() {
+                return inventory;
+            }
+
+            public void setInventory(Inventory inventory) {
+                this.inventory = inventory;
+            }
         }
     }
 

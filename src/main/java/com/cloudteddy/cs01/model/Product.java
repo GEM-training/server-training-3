@@ -17,7 +17,7 @@ import java.util.Set;
 @Entity
 @Table(name = "product",
         indexes = {@Index(name = "product_name_index", columnList = "name asc")})
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "product")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "entity")
 public class Product {
 
     @Id
@@ -247,6 +247,39 @@ public class Product {
 
             @ManyToOne
             private Dealer dealer;
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+                Id id = (Id) o;
+                if (product.getId() != id.product.getId()) return false;
+                return dealer.getId() == id.dealer.getId();
+
+            }
+
+            public Product getProduct() {
+                return product;
+            }
+
+            public void setProduct(Product product) {
+                this.product = product;
+            }
+
+            public Dealer getDealer() {
+                return dealer;
+            }
+
+            public void setDealer(Dealer dealer) {
+                this.dealer = dealer;
+            }
+
+            @Override
+            public int hashCode() {
+                int result = getProduct() != null ? getProduct().hashCode() : 0;
+                result = 31 * result + (getDealer() != null ? getDealer().hashCode() : 0);
+                return result;
+            }
         }
 
     }

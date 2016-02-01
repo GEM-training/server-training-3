@@ -86,6 +86,39 @@ public class Bill {
 
             @ManyToOne
             private Product product;
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+                Id id = (Id) o;
+                if (bill.getId() != id.bill.getId()) return false;
+                return product.getId() == id.product.getId();
+
+            }
+
+            @Override
+            public int hashCode() {
+                int result = bill.hashCode();
+                result = 31 * result + product.hashCode();
+                return result;
+            }
+
+            public Bill getBill() {
+                return bill;
+            }
+
+            public void setBill(Bill bill) {
+                this.bill = bill;
+            }
+
+            public Product getProduct() {
+                return product;
+            }
+
+            public void setProduct(Product product) {
+                this.product = product;
+            }
         }
     }
 }
