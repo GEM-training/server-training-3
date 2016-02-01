@@ -30,7 +30,7 @@ public class ProductDaoImpl extends AbstractDao implements ProductDao {
 
     @Override
     public Product findById(Serializable id) {
-        return (Product) getSession().load(Product.class, id);
+        return (Product) getSession().get(Product.class, id);
     }
 
     @Override
