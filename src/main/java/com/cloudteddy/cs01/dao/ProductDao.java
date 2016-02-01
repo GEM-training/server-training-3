@@ -1,6 +1,5 @@
 package com.cloudteddy.cs01.dao;
 
-import com.cloudteddy.cs01.dao.filter.Filter;
 import com.cloudteddy.cs01.dao.filter.ProductFilter;
 import com.cloudteddy.cs01.model.Product;
 

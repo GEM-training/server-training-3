@@ -61,7 +61,7 @@ public class Product {
     })
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "type", referencedColumnName = "id", nullable = false)
     @JsonIgnore
     @NotNull(message = "type not null")
