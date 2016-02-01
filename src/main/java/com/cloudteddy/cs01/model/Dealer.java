@@ -1,7 +1,10 @@
 package com.cloudteddy.cs01.model;
 
 
+import org.apache.solr.analysis.*;
 import org.hibernate.annotations.*;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Parameter;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
@@ -17,14 +20,20 @@ import java.util.Set;
 @Table(name = "dealer")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "entity")
 @Cacheable
+@Indexed
 public class Dealer {
     @Id
     @SequenceGenerator(name = "dealer_id_seq", sequenceName = "dealer_id_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dealer_id_seq")
     @Column(name = "id", nullable = false, unique = true)
+    @DocumentId
     private long id;
 
     @Column(name = "name", nullable = false)
+    @Fields({
+            @Field(name = "detail_ngram", analyzer = @Analyzer(definition = "nGramAnalyzer")),
+            @Field(name = "detail_edge", analyzer = @Analyzer(definition = "edgeAnalyzer")),
+    })
     private String name;
 
     @Column(name = "phone", nullable = true)
