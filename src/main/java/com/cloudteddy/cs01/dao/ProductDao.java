@@ -9,10 +9,8 @@ import java.util.List;
 /**
  * Created by kimtung on 01/02/16.
  */
-public interface ProductDao extends AbstractDao {
+public interface ProductDao extends AbstractDao<Product> {
 
-    Long count();
-    Product findById(Serializable id);
     List<Product> list(ProductFilter filter);
 
 }

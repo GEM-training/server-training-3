@@ -14,18 +14,17 @@ import java.util.List;
  * Created by kimtung on 01/02/16.
  */
 @Repository("dao_productType")
-public class ProductTypeDaoImpl extends AbstractDao implements ProductTypeDao {
+public class ProductTypeDaoImpl extends AbstractDao<Product.Type> implements ProductTypeDao {
+
+    public ProductTypeDaoImpl() {
+        super(Product.Type.class);
+    }
 
     @Override
     public Long count() {
         Criteria criteria = getSession().createCriteria(Product.Type.class);
         criteria.setProjection(Projections.rowCount());
         return (Long) criteria.uniqueResult();
-    }
-
-    @Override
-    public Product.Type findById(Serializable id) {
-        return (Product.Type) getSession().get(Product.Type.class, id);
     }
 
     @Override

@@ -8,8 +8,7 @@ import java.util.List;
 /**
  * Created by kimtung on 01/02/16.
  */
-public interface ProductTypeDao extends AbstractDao {
-    Long count();
-    Product.Type findById(Serializable id);
+public interface ProductTypeDao extends AbstractDao<Product.Type> {
+
     List<Product.Type> list();
 }

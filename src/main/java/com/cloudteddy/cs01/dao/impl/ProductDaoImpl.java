@@ -12,28 +12,18 @@ import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by kimtung on 01/02/16.
  */
 @Repository("dao_product")
-public class ProductDaoImpl extends AbstractDao implements ProductDao {
+public class ProductDaoImpl extends AbstractDao<Product> implements ProductDao {
 
-    @Override
-    public Long count() {
-        Criteria criteria = getSession().createCriteria(Product.class);
-        criteria.setProjection(Projections.rowCount());
-        return (Long) criteria.uniqueResult();
+    public ProductDaoImpl() {
+        super(Product.class);
     }
 
-    @Override
-    public Product findById(Serializable id) {
-        return (Product) getSession().get(Product.class, id);
-    }
-
-    @Override
     public List<Product> list(ProductFilter filter) {
         if(filter.keyword != null) {
             FullTextSession fullTextSession = Search.getFullTextSession(getSession());
