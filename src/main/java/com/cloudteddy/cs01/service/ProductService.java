@@ -24,8 +24,8 @@ public class ProductService {
     @Autowired
     private ProductTypeDao productTypeDao;
 
-    private Product findById(Serializable id) {
-        return productDao.findById(id);
+    public Product findById(Serializable id) {
+        return productDao.getById(id);
     }
 
     public List<Product> list(ProductFilter filter) {
@@ -41,13 +41,21 @@ public class ProductService {
     }
 
     public void insert(Product product, Serializable typeId) {
-        Product.Type type = productTypeDao.findById(typeId);
+        Product.Type type = productTypeDao.loadById(typeId);
         product.setType(type);
         productDao.persit(product);
     }
 
     public void update(Product product) {
+        productDao.update(product);
+    }
 
+    public void delete(Product product) {
+        productDao.delete(product);
+    }
+
+    public void delete(Serializable id) {
+        productDao.deleteById(id);
     }
 
 
