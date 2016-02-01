@@ -35,9 +35,9 @@ public class ProductController {
         return productService.findById(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = "application/json;")
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     public void insert(@RequestBody Product product) {
-        productService.insert(product);
+        productService.insert(product, product.getType().getId());
     }
 
     @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
