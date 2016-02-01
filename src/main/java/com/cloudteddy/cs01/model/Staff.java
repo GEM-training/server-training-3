@@ -1,6 +1,10 @@
 package com.cloudteddy.cs01.model;
 
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created by kimtung on 1/20/16.

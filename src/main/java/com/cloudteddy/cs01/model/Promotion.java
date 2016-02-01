@@ -1,6 +1,10 @@
 package com.cloudteddy.cs01.model;
 
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +14,8 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "promotion")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "entity")
+@Cacheable
 public class Promotion {
 
     @Id

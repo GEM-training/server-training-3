@@ -1,6 +1,11 @@
 package com.cloudteddy.cs01.model;
 
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;

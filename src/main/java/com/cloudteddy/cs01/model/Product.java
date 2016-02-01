@@ -18,6 +18,7 @@ import java.util.Set;
 @Table(name = "product",
         indexes = {@Index(name = "product_name_index", columnList = "name asc")})
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "entity")
+@Cacheable
 public class Product {
 
     @Id
